@@ -1,9 +1,19 @@
 Rails.application.routes.draw do
-  resources :microposts
+  # get "comment/index"
+  resources :microposts do
+    resources :comment
+  end
   resources :users do
     get "microposts" => "users#find_by_user"
   end
-  root "users#index"
+  root "static_pages#home"
+  get "static_pages/home"
+  get "static_pages/help"
+  get "static_pages/about"
+  get "static_pages/contact"
+  get "test" => "static_pages#test"
+  get "/signup" => "users#new"
+  # get "static"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
