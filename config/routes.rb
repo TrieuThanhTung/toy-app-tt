@@ -13,6 +13,11 @@ Rails.application.routes.draw do
   get "static_pages/contact"
   get "test" => "static_pages#test"
   get "/signup" => "users#new"
+  # login routes
+  get "login" => "sessions#new"
+  post "login" => "sessions#create"
+  delete "logout" => "sessions#destroy"
+  # get "logout" => "sessions#destroy"
   # get "static"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

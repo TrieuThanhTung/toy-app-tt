@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
+  include SessionsHelper
 
   # GET /users or /users.json
   def index
@@ -8,7 +9,7 @@ class UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
-    flash[:success] = "WELCOM TO THE SAMPLE APP!"
+    flash.now[:success] = "WELCOM TO THE SAMPLE APP!"
     @user = User.find(params[:id])
   end
 
@@ -27,7 +28,8 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: "User was successfully created." }
+        log_in(@user)
+        format.html { redirect_to @user }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }

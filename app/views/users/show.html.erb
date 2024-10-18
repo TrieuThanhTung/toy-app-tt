@@ -12,6 +12,7 @@
 </div>
 
 <div>
+  <p> session <%= session[:user_id]%> <%= session[:user_name]%> </p>
   <%= link_to "Edit this user", edit_user_path(@user) %> |
   <%= link_to "Back to users", users_path %>
 
