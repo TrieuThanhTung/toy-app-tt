@@ -23,6 +23,10 @@ module SessionsHelper
     end
   end
 
+  def current_user?(user)
+    current_user == user
+  end
+
   def logged_in?
     !current_user.nil?
   end
@@ -37,5 +41,9 @@ module SessionsHelper
     forget(current_user) # why
     @current_user = nil
     reset_session
+  end
+
+  def store_location
+    session[:forwarding_url] = request.original_url if request.get?
   end
 end

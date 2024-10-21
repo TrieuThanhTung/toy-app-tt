@@ -5,12 +5,15 @@
 <h1>Users</h1>
 
 <div id="users">
-  <% @users.each do |user| %>
-    <%= render user %>
-    <p>
-      <%= link_to "Show this user", user %>
-    </p>
-  <% end %>
+  <%= will_paginate @clients, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  <ul class="users">
+    <% @users.each do |user| %>
+    <li>
+      <%= render partial: "user_paging", locals: {user: user} %>
+    </li> 
+    <% end %>
+  </ul>
+  <%= will_paginate @clients, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
 </div>
 
 <%= link_to "New user", new_user_path %>

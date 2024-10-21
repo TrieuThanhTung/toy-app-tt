@@ -14,10 +14,11 @@ class SessionsController < ApplicationController
 
     respond_to do |format|
       if user && user.authenticate(params[:session][:password])
+        forwarding_url = session[:forwarding_url]
         reset_session
         log_in(user)
         remember(user) if params[:session][:remember_me] == "1"
-        format.html { redirect_to user, notice: "Login success." }
+        format.html { redirect_to forwarding_url || user, notice: "Login success." }
       else
         flash.now[:danger] = "Invalid email/password combination login"
         format.html { render :new, status: :unprocessable_entity }
