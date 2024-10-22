@@ -14,11 +14,17 @@ class SessionsController < ApplicationController
 
     respond_to do |format|
       if user && user.authenticate(params[:session][:password])
-        forwarding_url = session[:forwarding_url]
-        reset_session
-        log_in(user)
-        remember(user) if params[:session][:remember_me] == "1"
-        format.html { redirect_to forwarding_url || user, notice: "Login success." }
+        if user.activated?
+          reset_session
+          log_in(user)
+          remember(user) if params[:session][:remember_me] == "1"
+          format.html { redirect_to user_url(user.id) || user, notice: "Login success." }
+        else
+          message = "Account not activated. "
+          message += "Check your email for the activation link."
+          flash[:warning] = message
+          format.html { redirect_to root_url || user, notice: "Login success." }
+        end
       else
         flash.now[:danger] = "Invalid email/password combination login"
         format.html { render :new, status: :unprocessable_entity }

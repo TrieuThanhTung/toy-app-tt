@@ -9,13 +9,14 @@ class UsersController < ApplicationController
   # GET /users or /users.json
   def index
     # @users = User.all
-    @users = User.paginate(page: params[:page])
+    @users = User.where(activated: false).paginate(page: params[:page])
   end
 
   # GET /users/1 or /users/1.json
   def show
     flash.now[:success] = "WELCOM TO THE SAMPLE APP!"
     @user = User.find(params[:id])
+    redirect_to root_url and return unless FILL_IN
   end
 
   # GET /users/new
@@ -33,12 +34,14 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        log_in(@user)
-        format.html { redirect_to @user }
+        UserMailer.account_activation(@user).deliver_now
+        flash[:info] = "Please check your email to activate your account."
+        format.html { render :new }
         format.json { render :show, status: :created, location: @user }
       else
+        flash[:info] = "Sign up fail"
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render json: @user.errors.full_messages, status: :unprocessable_entity }
       end
     end
   end
