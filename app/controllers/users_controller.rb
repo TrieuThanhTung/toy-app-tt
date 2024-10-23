@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   def show
     flash.now[:success] = "WELCOM TO THE SAMPLE APP!"
     @user = User.find(params[:id])
-    redirect_to root_url and return unless FILL_IN
+    redirect_to root_url
   end
 
   # GET /users/new
@@ -98,7 +98,7 @@ class UsersController < ApplicationController
 
     def correct_user
       @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(user)
+      redirect_to(root_url) unless current_user?(@user)
     end
 
     def admin_user

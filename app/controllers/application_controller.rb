@@ -15,18 +15,18 @@ class ApplicationController < ActionController::Base
   #   render json: { message: "Internal server error handler + #{e.message}" }, status: :internal_server_error
   # end
 
-  rescue_from StandardError, with: :handle_exception
+  # rescue_from StandardError, with: :handle_exception
 
-  private
+  # private
 
-  def handle_exception(e)
-    case e
-    when ActiveRecord::RecordNotFound
-        render json: { erros: "Record not found", message: e.message }, status: :not_found
-    when ActionController::RoutingError
-        render json: { error: "Route not found" }, status: :not_found
-    else
-        render json: { error: "Internal server error", message: e.message }, status: :internal_server_error
-    end
-  end
+  # def handle_exception(e)
+  #   case e
+  #   when ActiveRecord::RecordNotFound
+  #       render json: { erros: "Record not found", message: e.message }, status: :not_found
+  #   when ActionController::RoutingError
+  #       render json: { error: "Route not found" }, status: :not_found
+  #   else
+  #       render json: { error: "Internal server error", message: e.message }, status: :internal_server_error
+  #   end
+  # end
 end
