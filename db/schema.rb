@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_22_081121) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_23_015938) do
   create_table "comments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "commenter"
     t.text "content"
@@ -23,9 +23,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_22_081121) do
   create_table "microposts", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "title"
     t.text "content"
-    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at"
+    t.index ["user_id"], name: "index_microposts_on_user_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -46,4 +48,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_22_081121) do
   end
 
   add_foreign_key "comments", "microposts"
+  add_foreign_key "microposts", "users"
 end

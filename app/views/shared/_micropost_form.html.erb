@@ -1,0 +1,11 @@
+<%= form_with(model: @micropost, local: true) do |f| %>
+ <%= render 'shared/errors', object: f.object %> 
+ <div>
+    <%= f.label :title, style: "display: block" %>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+  <%= f.text_area :content, placeholder: "Compose new micropost..." %>
+  </div>
+<%= f.submit "Post", class: "btn btn-primary" %>
+<% end %>
