@@ -31,9 +31,16 @@
 #   activated_at: Time.zone.now)
 # end
 
-100.times do |n|
-  title = Faker::Book.title
-  content = Faker::Lorem.paragraph
-  user_id = 105
-  Micropost.create!(title: title, content: content, user_id: user_id)
-end
+# 100.times do |n|
+#   title = Faker::Book.title
+#   content = Faker::Lorem.paragraph
+#   user_id = 105
+#   Micropost.create!(title: title, content: content, user_id: user_id)
+# end
+
+users = User.all
+user = User.find(105)
+following = users[2..50]
+followers = users[3..40]
+following.each { |followed| user.follow(followed) }
+followers.each { |follower| follower.follow(user) }

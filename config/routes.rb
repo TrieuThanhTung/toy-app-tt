@@ -7,7 +7,11 @@ Rails.application.routes.draw do
   end
   resources :users do
     get "microposts" => "users#find_by_user"
+    member do
+      get :following, :followers
+    end
   end
+  resources :relationships, only: [ :create, :destroy ]
   root "static_pages#home"
   get "static_pages/home"
   get "static_pages/help"

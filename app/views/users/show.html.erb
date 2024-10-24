@@ -8,8 +8,12 @@
         <%= @user.name %>
       </h1>
     </section>
+    <section class="stats">
+<%= render 'shared/stats' %>
+</section>
   </aside>
   <div class="col-md-8">
+  <%= render 'follow_form' if logged_in? %>
     <% if @user.microposts.any? %>
       <h3>Microposts (<%= @user.microposts.count %>)</h3>
       <%= will_paginate @microposts, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
@@ -20,11 +24,15 @@
     <% end %>
   </div>
 </div>
-
+<%
+=begin%>
+ 
 <div>
   <p> session <%= session[:user_id]%> <%= session[:user_name]%> </p>
   <%= link_to "Edit this user", edit_user_path(@user) %> |
   <%= link_to "Back to users", users_path %>
 
   <%= button_to "Destroy this user", @user, method: :delete, data: {turbo_confirm: "Are you sure?"}%>
-</div>
+</div> 
+<%
+=end%>
