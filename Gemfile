@@ -39,6 +39,9 @@ gem "rails-controller-testing", "~> 1.0", ">= 1.0.5"
 
 gem "will_paginate", "~> 4.0", ">= 4.0.1"
 gem "will_paginate-bootstrap4"
+gem "active_storage_validations", "~> 1.1", ">= 1.1.4"
+gem "image_processing", "1.9.3"
+gem "mini_magick", "~> 4.11", ">= 4.11.0"
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
