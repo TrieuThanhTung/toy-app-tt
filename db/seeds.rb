@@ -7,3 +7,40 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+# User.create!(name: "Example User",
+#       email: "example@railstutorial.org",
+#       password:
+#       "foobar",
+#       password_confirmation: "foobar",
+#       admin:
+#       true,
+#       activated: true,
+#       activated_at: Time.zone.now)
+# # Generate a bunch of additional users.
+# 99.times do |n|
+#   name = Faker::Name.name
+#   email = "example-#{n+1}@railstutorial.org"
+#   password = "password"
+#   User.create!(name: name,
+#   email: email,
+#   password:
+#   password,
+#   password_confirmation: password,
+#   activated: true,
+#   activated_at: Time.zone.now)
+# end
+
+# 100.times do |n|
+#   title = Faker::Book.title
+#   content = Faker::Lorem.paragraph
+#   user_id = 105
+#   Micropost.create!(title: title, content: content, user_id: user_id)
+# end
+
+users = User.all
+user = User.find(105)
+following = users[2..50]
+followers = users[3..40]
+following.each { |followed| user.follow(followed) }
+followers.each { |follower| follower.follow(user) }
