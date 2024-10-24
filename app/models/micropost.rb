@@ -1,6 +1,7 @@
 class Micropost < ApplicationRecord
   belongs_to :user
   has_many :comment
+  has_one_attached :image
   default_scope -> { order(created_at: :desc) }
 
   validates :title, presence: true, length: { in: 2..255, message: "Title's length is between 6 -> 255" }
