@@ -18,6 +18,11 @@
       <%= f.submit "Log in", class: "btn btn-primary" %>
     <% end %>
     <p>New user? <%= link_to "Sign up now!", signup_path %></p>
-    <%= button_to  'Login with Google', user_google_oauth2_omniauth_authorize_path, method: :post, :data => {turbo: "false"} %>
+    <div class="button-sso-login"> 
+      <%= button_to  'Login with Google', user_google_oauth2_omniauth_authorize_path, method: :post, :data => {turbo: "false"} %>
+    </div>
+    <div class="button-sso-login"> 
+      <%= button_to  'Login with Github', user_github_omniauth_authorize_path, method: :post, :data => {turbo: "false"} %>
+    </div>
   </div>
 </div>
