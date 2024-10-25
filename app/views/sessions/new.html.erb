@@ -17,6 +17,14 @@
     
     <%= f.submit "Log in", class: "btn btn-primary" %>
   <% end %>
+  <%
+=begin%>
+ <%- resource_class.omniauth_providers.each do |provider| %>
+    <%= button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false } %><br />
+  <% end %> 
+<%
+=end%>
+<%= button_to  'Login with Google', user_google_oauth2_omniauth_authorize_path, method: :post, :data => {turbo: "false"} %>
   <p>New user? <%= link_to "Sign up now!", signup_path %></p>
 </div>
 </div>
