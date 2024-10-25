@@ -24,5 +24,8 @@
     <div class="button-sso-login"> 
       <%= button_to  'Login with Github', user_github_omniauth_authorize_path, method: :post, :data => {turbo: "false"} %>
     </div>
+    <div class="button-sso-login"> 
+      <%= button_to  'Login with Facebook', user_facebook_omniauth_authorize_path, method: :post, :data => {turbo: "false"} %>
+    </div>
   </div>
 </div>
