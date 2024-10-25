@@ -18,11 +18,24 @@ class User < ApplicationRecord
   validates :email, presence: true,
     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
     uniqueness: { case_sensitive: true }
-  has_secure_password
+  # has_secure_password
   validates :password, length: { minimum: 6 }, presence: true, allow_nil: true
 
-  def self.from_google(email:, uid:)
-    find_or_create_by!(email: email, uid: uid, provider: "google_oauth2")
+  def self.from_omniauth(access_token)
+    data = access_token.info
+    user = User.find_by(email: data["email"])
+    unless user
+      new_password = Devise.friendly_token[0, 20]
+      user = User.create!(
+        name: data["name"],
+        email: data["email"],
+        password: new_password,
+        password_confirmation: new_password,
+        activated: true,
+        activated_at: Time.zone.now
+      )
+    end
+    user
   end
 
   def remember
