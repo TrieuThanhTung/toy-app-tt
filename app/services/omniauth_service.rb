@@ -8,10 +8,10 @@ class OmniauthService
     name_user = auth[:provider] != "github" ? data[:name] : data[:nickname]
     if user.nil?
       new_password = Devise.friendly_token[0, 20]
-      user = User.create(
+      user = User.create!(
         name: name_user,
         email: data[:email],
-        password: data[:password],
+        password: new_password,
         password_confirmation: new_password,
         activated: true,
         activated_at: Time.zone.now
