@@ -21,58 +21,6 @@ class User < ApplicationRecord
   # has_secure_password
   validates :password, length: { minimum: 6 }, presence: true, allow_nil: true
 
-  def self.from_omniauth(access_token)
-    data = access_token.info
-    return nil if data.email.nil?
-    user = User.find_by(email: data["email"])
-    unless user
-      new_password = Devise.friendly_token[0, 20]
-      user = User.create!(
-        name: data["name"],
-        email: data["email"],
-        password: new_password,
-        password_confirmation: new_password,
-        activated: true,
-        activated_at: Time.zone.now
-      )
-    end
-    user
-  end
-
-  def self.from_github(access_token)
-    data = access_token.info
-    user = User.find_by(email: data["email"])
-    unless user
-      new_password = Devise.friendly_token[0, 20]
-      user = User.create!(
-        name: data["nickname"],
-        email: data["email"],
-        password: new_password,
-        password_confirmation: new_password,
-        activated: true,
-        activated_at: Time.zone.now
-      )
-    end
-    user
-  end
-
-  def self.from_github(access_token)
-    data = access_token.info
-    user = User.find_by(email: data["email"])
-    unless user
-      new_password = Devise.friendly_token[0, 20]
-      user = User.create!(
-        name: data["nickname"],
-        email: data["email"],
-        password: new_password,
-        password_confirmation: new_password,
-        activated: true,
-        activated_at: Time.zone.now
-      )
-    end
-    user
-  end
-
   def remember
     self.remember_token = User.new_token
     update_attribute(:remember_digest, User.digest(remember_token))

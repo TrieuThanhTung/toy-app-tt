@@ -1,20 +1,26 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   include SessionsHelper
+
   def facebook
-    user = User.from_omniauth(request.env["omniauth.auth"])
+    user = OmniauthService.from_omniauth(auth)
     login_redirect(user, "Facebook")
   end
 
   def github
-    user = User.from_github(auth)
+    user = OmniauthService.from_omniauth(auth)
     login_redirect(user, "Github")
   end
 
   def google_oauth2
-    user = User.from_omniauth(auth)
+    user = OmniauthService.from_omniauth(auth)
     login_redirect(user, "Google")
   end
 
+  def failure
+    redirect_to root_path, event: :unprocessable_entity
+  end
+
+  private
   def login_redirect(user, kind_sso)
     if user&.persisted?
       log_in(user)
@@ -28,9 +34,5 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def auth
     @auth ||= request.env["omniauth.auth"]
-  end
-
-  def failure
-    redirect_to root_path, event: :unprocessable_entity
   end
 end
