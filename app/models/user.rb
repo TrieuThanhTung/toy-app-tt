@@ -23,6 +23,7 @@ class User < ApplicationRecord
 
   def self.from_omniauth(access_token)
     data = access_token.info
+    return nil if data.email.nil?
     user = User.find_by(email: data["email"])
     unless user
       new_password = Devise.friendly_token[0, 20]

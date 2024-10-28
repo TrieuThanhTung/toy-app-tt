@@ -16,13 +16,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def login_redirect(user, kind_sso)
-    if user.persisted?
+    if user&.persisted?
       log_in(user)
       flash[:notice] = t "devise.omniauth_callbacks.success", kind: kind_sso
       redirect_to user_url(user.id), event: :authentication
     else
       flash[:alert] = t "devise.omniauth_callbacks.failure", kind: kind_sso, reason: "#{auth.info.email} is not authorized."
-      redirect_to login_path
+      failure
     end
   end
 
@@ -31,6 +31,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def failure
-    redirect_to root_path
+    redirect_to root_path, event: :unprocessable_entity
   end
 end
