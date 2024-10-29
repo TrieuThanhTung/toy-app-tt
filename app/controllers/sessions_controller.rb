@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     # end
 
     respond_to do |format|
-      if user && user.authenticate(params[:session][:password])
+      if user&.valid_password?(params[:session][:password])
         if user.activated?
           reset_session
           log_in(user)

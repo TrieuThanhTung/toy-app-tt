@@ -1,10 +1,15 @@
 class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: [ :google_oauth2, :github, :facebook ]
+  has_many :providers, dependent: :destroy
   has_many :microposts, dependent: :destroy
   has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
-
 
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save { self.email = email.downcase }
@@ -14,7 +19,7 @@ class User < ApplicationRecord
   validates :email, presence: true,
     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
     uniqueness: { case_sensitive: true }
-  has_secure_password
+  # has_secure_password
   validates :password, length: { minimum: 6 }, presence: true, allow_nil: true
 
   def remember
