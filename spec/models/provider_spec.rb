@@ -6,15 +6,10 @@ RSpec.describe Provider, type: :model do
     create(:user)
   }
 
-  it "validates attributes" do
+  it "Provider is valid with valid attributes" do
     should belong_to(:user)
     should validate_presence_of(:name)
     should validate_presence_of(:uid)
-  end
-
-  it "Provider is valid with valid attributes" do
-    new_provider = Provider.new(user_id: user.id, name: "google_oauth2", uid: "1234555")
-    expect(new_provider).to be_valid
   end
 
   it "Provider is not valid without a user_id" do

@@ -6,11 +6,11 @@ class OmniauthService
     def from_omniauth(auth)
       provider = find_provider(auth)
       if provider.nil?
-        user = find_or_create_user(auth)
-        provider = create_provider(auth, user)
-        unless provider.persisted?
-          return nil
+        ActiveRecord::Base.transaction do
+          user = find_or_create_user(auth)
+          provider = create_provider(auth, user)
         end
+        return nil if provider.nil?
       end
       provider.user
     end
