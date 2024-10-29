@@ -8,17 +8,20 @@ class OmniauthService
       if provider.nil?
         user = find_or_create_user(auth)
         provider = create_provider(auth, user)
+        unless provider.persisted?
+          return nil
+        end
       end
       provider.user
     end
 
     private
     def find_provider(auth)
-      Provider.find_by(uid: auth[:uid], provider_name: auth[:provider])
+      Provider.find_by(uid: auth[:uid], name: auth[:provider])
     end
 
     def create_provider(auth, user)
-      Provider.create!(user: user, provider_name: auth[:provider], uid: auth[:uid])
+      Provider.create!(user: user, name: auth[:provider], uid: auth[:uid])
     end
 
     def find_or_create_user(auth)
