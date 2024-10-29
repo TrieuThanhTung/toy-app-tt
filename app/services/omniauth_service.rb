@@ -10,9 +10,10 @@ class OmniauthService
           user = find_or_create_user(auth)
           provider = create_provider(auth, user)
         end
-        return nil if provider.nil?
       end
       provider.user
+    rescue
+      nil
     end
 
     private
