@@ -1,0 +1,23 @@
+<div id="comment-<%= micropost.id %>"
+     style="margin: 30px 10px; border: 1px solid grey; border-radius: 5px">
+  <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
+  <span class="timestamp" style="float: right">
+    At <%= time_ago_in_words(micropost.created_at) %> ago.
+  </span>
+  <p class="content micropost-content">
+    <%= micropost.content %>
+  </p>
+  <div style="display: flex; justify-content: right">
+    <button class="reply-btn">Reply</button>
+  </div>
+  <div style="margin: 20px; display: none" class="reply-container-form">
+    <%= render "shared/reply_form", micropost: micropost %>
+  </div>
+  <div style="margin: 20px">
+    <div id="microposts">
+      <% micropost.comments.each do |comment| %>
+        <%= render "shared/reply", micropost: comment %>
+      <% end %>
+    </div>
+  </div>
+</div>

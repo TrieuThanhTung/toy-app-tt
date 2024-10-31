@@ -1,0 +1,13 @@
+<%= form_with(model: [@micropost, @micropost.comments],
+              url: micropost_comments_url(@micropost),
+              method: :post, local: false, id: 'comment-form') do |f| %>
+  <div class="field">
+    <%= f.text_area :content, id: "input-comment", placeholder: "Comment here..."%>
+  </div>
+  <%= f.submit "Comment", class: "btn btn-primary", id: "button-submit" %>
+  <div>
+    <% flash.each do |message_type, message| %>
+      <div class="alert alert-<%= message_type %>"><%= message %></div>
+    <% end %>
+  </div>
+<% end %>

@@ -227,7 +227,7 @@ input {
   .timestamp {
     color: $gray-light;
     display: block;
-    margin-left: 60px;
+    margin-right: 60px;
   }
 
   .gravatar {
@@ -298,4 +298,8 @@ span.image {
 
 .button-sso-login {
   margin: 10px 0;
+}
+
+.micropost-content {
+  margin: 20px;
 }

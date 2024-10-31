@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_29_032408) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_30_031429) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -39,22 +39,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_29_032408) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "comments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.text "content"
-    t.bigint "micropost_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["micropost_id"], name: "index_comments_on_micropost_id"
-    t.index ["user_id"], name: "index_comments_on_user_id"
-  end
-
   create_table "microposts", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.string "title"
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.bigint "parent_id"
+    t.index ["parent_id"], name: "index_microposts_on_parent_id"
     t.index ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_microposts_on_user_id"
   end
@@ -102,8 +93,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_29_032408) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "comments", "microposts"
-  add_foreign_key "comments", "users"
+  add_foreign_key "microposts", "microposts", column: "parent_id"
   add_foreign_key "microposts", "users"
   add_foreign_key "providers", "users"
 end
