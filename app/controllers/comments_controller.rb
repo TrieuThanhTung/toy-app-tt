@@ -1,9 +1,4 @@
 class CommentsController < ApplicationController
-  def index
-    @comments = Comment.find_by!(micropost_id: params[:micropost_id])
-    render json: @comments
-  end
-
   def create
     @micropost = params[:comment_id] ? Micropost.find(params[:comment_id])
                    : Micropost.find(params[:micropost_id])

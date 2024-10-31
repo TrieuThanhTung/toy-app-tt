@@ -50,6 +50,7 @@ RSpec.describe "Microposts", type: :request do
     context "create a new comment(reply)" do
       it "works!" do
         post micropost_comment_reply_path(micropost_id: micropost.id, comment_id: Micropost.first.id), params: { micropost: valid_comment }
+        expect(Micropost.count).to eq(3)
         expect(response).to have_http_status(:created)
       end
 
