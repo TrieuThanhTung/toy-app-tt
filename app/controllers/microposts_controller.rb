@@ -11,11 +11,6 @@ class MicropostsController < ApplicationController
   # GET /microposts/1 or /microposts/1.json
   def show
     @micropost = Micropost.find(params[:id])
-    @comments = @micropost.comment
-    render json: {
-      'mc': @micropost,
-      "com": @comments
-    }
   end
 
   # GET /microposts/new
@@ -29,17 +24,6 @@ class MicropostsController < ApplicationController
 
   # POST /microposts or /microposts.json
   def create
-    # @micropost = Micropost.new(micropost_params)
-
-    # respond_to do |format|
-    #   if @micropost.save
-    #     format.html { redirect_to @micropost, notice: "Micropost was successfully created." }
-    #     format.json { render :show, status: :created, location: @micropost }
-    #   else
-    #     format.html { render :new, status: :unprocessable_entity }
-    #     format.json { render json: @micropost.errors, status: :unprocessable_entity }
-    #   end
-    # end
 
     @micropost = current_user.microposts.build(micropost_params)
     @micropost.image.attach(params[:micropost][:image])
