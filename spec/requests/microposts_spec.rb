@@ -22,8 +22,7 @@ RSpec.describe "Microposts", type: :request do
   }
 
   before do
-    Rails.application.env_config["omniauth.auth"] = mock_auth_hash(:google_oauth2)
-    post user_google_oauth2_omniauth_callback_path
+    post login_path, params: {session: {email: user.email, password: 'password'}}
   end
 
   describe "POST /microposts/:micropost_id/comments" do
