@@ -303,3 +303,119 @@ span.image {
 .micropost-content {
   margin: 20px;
 }
+// comment form
+#comment-form {
+  margin-top: 60px;
+}
+
+.comment-form {
+  border: 1px solid #777777;
+  border-radius: 20px;
+}
+
+/* Container comment */
+.comment-body {
+  background-color: rgba(119, 119, 119, 0.2);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#comment {
+  margin: 30px 10px
+}
+
+.user {
+  font-weight: bold;
+}
+
+
+.comment-box {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background-color: #f0f2f5;
+  flex-direction: column;
+}
+
+/* Input comment */
+.comment-input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #1c1e21;
+}
+
+.content {
+  margin: 10px 20px;
+  font-size: 16px;
+}
+
+.comment-input::placeholder {
+  color: #606770;
+}
+
+/* Button comment */
+.button-container {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+}
+
+
+.comment-button {
+  width: 100px;
+  background-color: #1877f2;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: background-color 0.3s;
+}
+
+.comment-button:hover {
+  background-color: #165fbb;
+}
+
+.comment-button:active {
+  background-color: #144a96;
+}
+
+#button-cancel {
+  background-color: gainsboro;
+}
+
+#button-cancel:hover {
+  color: white;
+  background-color: #777777;
+}
+
+// reply button
+/* Button reply */
+.reply-btn {
+  background: none;
+  border: none;
+  color: #65676b; /* Màu chữ xám nhạt */
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  margin: 0 4px;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.reply-btn:hover {
+  color: #161718; /* Màu xanh khi hover */
+  text-decoration: underline;
+}
+
+.reply-btn:focus {
+  outline: none;
+}

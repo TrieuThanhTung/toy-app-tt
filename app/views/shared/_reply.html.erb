@@ -1,13 +1,18 @@
+<%#= turbo_frame_tag("comments_#{micropost.id}") do %>
+
+<%# end %>
 <div id="comment-<%= micropost.id %>"
-     style="margin: 30px 10px; border: 1px solid grey; border-radius: 5px ">
-  <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
-  <span class="timestamp" style="float: right">
-    At <%= time_ago_in_words(micropost.created_at) %> ago.
-  </span>
-  <p class="content micropost-content">
-    <%= micropost.content %>
-  </p>
+     style="margin: 30px 10px">
+  <div class="comment-body">
+      <span class="user">
+      <%= link_to micropost.user.name, micropost.user %>
+    </span>
+    <span class="timestamp" style="float: right">
+      At <%= time_ago_in_words(micropost.created_at) %> ago.
+    </span>
+    <p class="content micropost-content">
+      <%= micropost.content %>
+    </p>
+  </div>
 </div>
-
-
 
