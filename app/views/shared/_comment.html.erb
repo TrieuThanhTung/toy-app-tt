@@ -1,5 +1,5 @@
 <%= turbo_frame_tag("comments_#{micropost.id}") do %>
-  <div id="comment-<%= micropost.id %>" style="">
+  <div id="comment-<%= micropost.id %>" style="margin: 20px 0" data-controller="comment">
     <div class="comment-body">
       <span class="user">
       <%= link_to micropost.user.name, micropost.user %>
@@ -11,15 +11,23 @@
         <%= micropost.content %>
       </p>
     </div>
-    <div style="margin: 0 10px; display: flex; justify-content: left">
-      <button class="reply-btn">
+    <div style="margin: 0 10px; display: flex; justify-content: left;">
+      <button style="font-size: 12px" class="reply-btn" data-comment-target="replyButton" data-action="click->comment#reply_toggle">
         Reply
       </button>
     </div>
-    <div style="margin: 20px; display: none" class="reply-container-form">
+    <div>
+      <% if micropost.comments.size > 0 %>
+        <button class="reply-btn" data-comment-target="repliesButton" data-action="click->comment#show_replies">
+          Hide <%= micropost.comments.size %> replies
+        </button>
+      <% else %>
+    </div>
+    <% end %>
+    <div style="margin: 20px; display: none" class="reply-container-form" data-comment-target="replyForm">
       <%= render "shared/reply_form", micropost: micropost %>
     </div>
-    <div style="margin: 20px">
+    <div style="margin: 20px" data-comment-target="replies">
       <div id="microposts">
         <% micropost.comments.each do |comment| %>
           <%= render "shared/reply", micropost: comment %>

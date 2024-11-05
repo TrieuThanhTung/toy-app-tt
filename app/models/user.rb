@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [ :google_oauth2, :github, :facebook ]
@@ -19,7 +17,6 @@ class User < ApplicationRecord
   validates :email, presence: true,
     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
     uniqueness: { case_sensitive: true }
-  # has_secure_password
   validates :password, length: { minimum: 6 }, presence: true, allow_nil: true
 
   def remember

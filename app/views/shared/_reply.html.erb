@@ -1,6 +1,4 @@
-<%#= turbo_frame_tag("comments_#{micropost.id}") do %>
-
-<%# end %>
+<%= turbo_frame_tag("comments_#{micropost.id}") do %>
 <div id="comment-<%= micropost.id %>"
      style="margin: 30px 10px">
   <div class="comment-body">
@@ -15,4 +13,6 @@
     </p>
   </div>
 </div>
+<% end %>
+
 

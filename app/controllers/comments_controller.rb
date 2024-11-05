@@ -6,12 +6,20 @@ class CommentsController < ApplicationController
     new_comment.user = current_user
     respond_to do |format|
       if new_comment.save
-        flash[:success] = "Comment added successfully"
+        format.turbo_stream {
+          if request.fullpath.include?"/reply"
+            render turbo_stream: turbo_stream.replace("comments_#{new_comment.parent_id}",
+                                                      partial: 'shared/comment',
+                                                      locals: { micropost: @micropost })
+          else
+            render turbo_stream: turbo_stream.append("microposts_#{@micropost.id}",
+                                                      partial: 'shared/comment',
+                                                      locals: { micropost: new_comment })
+          end
+        }
         format.html { redirect_to @micropost, status: :created }
       else
-        flash[:danger] = new_comment.errors.full_messages.to_sentence
         format.html { redirect_to @micropost, status: :unprocessable_entity }
-        format.turbo_stream
       end
     end
   end

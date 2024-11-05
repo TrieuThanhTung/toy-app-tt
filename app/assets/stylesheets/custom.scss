@@ -367,7 +367,7 @@ span.image {
 
 
 .comment-button {
-  width: 100px;
+  width: 60px ;
   background-color: #1877f2;
   border: none;
   color: white;
@@ -376,7 +376,6 @@ span.image {
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
-  margin-left: 8px;
   transition: background-color 0.3s;
 }
 
@@ -419,3 +418,4 @@ span.image {
 .reply-btn:focus {
   outline: none;
 }
+

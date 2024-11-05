@@ -23,6 +23,7 @@
   </div>
   <div style="margin: 20px">
     <div id="microposts">
+      <div id="microposts_<%= micropost.id %>"></div>
       <% micropost.comments.each do |comment| %>
         <%= render "shared/comment", micropost: comment %>
       <% end %>
@@ -32,44 +33,19 @@
 
 
 <script type="text/javascript">
-    document.addEventListener("turbo:load", () => {
+    document.addEventListener("turbo:load", function() {
+        initializeCommentForm();
+    });
+    function initializeCommentForm() {
         let form = document.getElementById("comment-form");
         let textarea = document.getElementById("input-comment");
-
-        form.addEventListener("turbo:submit-end", (event) => {
-            if (event.detail.success) {  // Kiểm tra nếu submit thành công
-                textarea.value = '';
-                location.reload();
-            }
-        });
-    });
-
-    document.addEventListener("DOMContentLoaded", function() {
-        var replyButtons = document.querySelectorAll('.reply-btn');
-        var replyContainerForms = document.querySelectorAll('.reply-container-form');
-        var replyForms = document.querySelectorAll('.reply-form');
-        var replyTextAreaForms = document.querySelectorAll(".input-comment-reply")
-
-        replyButtons.forEach(function(replyButton, index) {
-            replyButton.addEventListener('click', function() {
-                let replyContainerForm = replyContainerForms[index]
-
-                if (replyContainerForm.style.display === 'none') {
-                    replyContainerForm.style.display = 'block';
-                } else {
-                    replyContainerForm.style.display = 'none';
-                }
-            });
-
-            let replyForm = replyForms[index]
-            let replyTextArea = replyTextAreaForms[index];
-
-            replyForm.addEventListener("turbo:submit-end", (event) => {
+        if (form && textarea) {
+            form.addEventListener("turbo:submit-end", (event) => {
                 if (event.detail.success) {
-                    replyTextArea.value = '';
-                    location.reload();
+                    textarea.value = ''
                 }
             });
-        });
-    });
+        }
+    }
 </script>
+
