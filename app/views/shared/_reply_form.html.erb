@@ -1,0 +1,12 @@
+<%= form_with(model: @micropost,
+              url:  micropost_comment_reply_url(micropost_id: micropost.parent_id, comment_id: micropost.id),
+              method: :post, local: false, class: 'comment-form reply-form') do |f| %>
+  <div class="field comment-input comment-box">
+    <%= f.text_area :content, value: "",  class: "comment-input input-comment-reply", placeholder: "Comment here..."%>
+    <div class="button-container">
+      <%= f.submit "Comment", class: "comment-button ", id: "button-submit" %>
+    </div>
+  </div>
+<% end %>
+
+

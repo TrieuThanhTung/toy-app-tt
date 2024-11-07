@@ -1,12 +1,11 @@
 class Micropost < ApplicationRecord
   belongs_to :user
-  has_many :comment
+  belongs_to :parent, class_name: "Micropost", optional: true
+  has_many :comments, class_name: "Micropost", foreign_key: "parent_id", dependent: :destroy
   has_one_attached :image
   default_scope -> { order(created_at: :desc) }
 
-  validates :title, presence: true, length: { in: 2..255, message: "Title's length is between 6 -> 255" }
-  validates :content, presence: true, length: { in: 10...140, message: "Content's length between 10 -> 140 characters" }
-  # validates :user_id, presence: true, numericality: { only_integer: true }
+  validates :content, presence: true
   validates :image, content_type: { in: %w[image/jpeg image/gif image/png], message: "must be a valid image format" },
                             size: { less_than: 100.kilobytes, message: "should be less than 100KB" }
 

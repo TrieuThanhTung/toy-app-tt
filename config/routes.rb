@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   get "password_resets/edit"
   # get "comment/index"
   resources :microposts do
-    resources :comment
+    resources :comments, only: [:create] do
+      post "/reply" => "comments#create"
+    end
   end
   resources :users do
     get "microposts" => "users#find_by_user"

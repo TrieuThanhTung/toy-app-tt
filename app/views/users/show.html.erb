@@ -1,4 +1,4 @@
-<p style="color: green"><%= notice %></p>
+<p class="notice"><%= notice %></p>
 
 <div class="row">
   <aside class="col-md-4">
@@ -24,15 +24,3 @@
     <% end %>
   </div>
 </div>
-<%
-=begin%>
- 
-<div>
-  <p> session <%= session[:user_id]%> <%= session[:user_name]%> </p>
-  <%= link_to "Edit this user", edit_user_path(@user) %> |
-  <%= link_to "Back to users", users_path %>
-
-  <%= button_to "Destroy this user", @user, method: :delete, data: {turbo_confirm: "Are you sure?"}%>
-</div> 
-<%
-=end%>

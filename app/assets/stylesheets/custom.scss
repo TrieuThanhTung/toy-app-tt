@@ -53,6 +53,14 @@ p {
   line-height: 1.7em;
 }
 
+.errors {
+  color: red;
+}
+
+.notice {
+  color: green;
+}
+
 /* footer */
 footer {
   margin-top: 45px;
@@ -227,7 +235,7 @@ input {
   .timestamp {
     color: $gray-light;
     display: block;
-    margin-left: 60px;
+    margin-right: 60px;
   }
 
   .gravatar {
@@ -298,4 +306,152 @@ span.image {
 
 .button-sso-login {
   margin: 10px 0;
+}
+
+.micropost-show {
+   margin-top: 80px;
+}
+
+.user-info {
+  display: flex;
+  justify-content: space-between
+}
+
+.micropost-content {
+  margin: 20px;
+}
+
+// comment form
+#comment-form {
+  margin-top: 60px;
+}
+
+.comment-form {
+  border: 1px solid #777777;
+  border-radius: 20px;
+}
+
+/* Container comment */
+.comment-container {
+  margin-top: 20px
+}
+
+.comment-body {
+  background-color: rgba(119, 119, 119, 0.2);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#comment {
+  margin: 30px 10px
+}
+
+.user {
+  font-weight: bold;
+}
+
+
+.comment-box {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background-color: #f0f2f5;
+  flex-direction: column;
+}
+
+/* Input comment */
+.comment-input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #1c1e21;
+}
+
+.content {
+  margin: 10px 20px;
+  font-size: 16px;
+}
+
+.comment-input::placeholder {
+  color: #606770;
+}
+
+/* Button comment */
+.button-container {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+}
+
+.comment-button {
+  width: 100px ;
+  background-color: #1877f2;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.comment-button:hover {
+  background-color: #165fbb;
+}
+
+.comment-button:active {
+  background-color: #144a96;
+}
+
+#button-cancel {
+  background-color: gainsboro;
+}
+
+#button-cancel:hover {
+  color: white;
+  background-color: #777777;
+}
+
+.reply-container-form {
+  margin: 20px 30px;
+  display: none;
+}
+
+.replies-container {
+  margin: 10px 30px;
+}
+
+/* Button reply */
+.reply-btn {
+  background: none;
+  border: none;
+  color: #65676b;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  margin: 0 4px;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.reply-btn:hover {
+  color: #161718;
+  text-decoration: underline;
+}
+
+.reply-btn:focus {
+  outline: none;
+}
+
+.timestamp {
+  float: right;
+}
+
+.reply-body {
+  margin: 30px 10px
 }

@@ -1,0 +1,38 @@
+<%= turbo_frame_tag("comments_#{micropost.id}") do %>
+  <div class="comment-container" id="comment-<%= micropost.id %>" data-controller="comment">
+    <div class="comment-body">
+      <span class="user">
+      <%= link_to micropost.user.name, micropost.user %>
+    </span>
+      <span class="timestamp">
+      At <%= time_ago_in_words(micropost.created_at) %> ago.
+    </span>
+      <p class="content micropost-content">
+        <%= micropost.content %>
+      </p>
+    </div>
+    <div>
+      <button class="reply-btn" data-comment-target="replyButton" data-action="click->comment#reply_toggle">
+        Reply
+      </button>
+    </div>
+    <div>
+      <% if micropost.comments.size > 0 %>
+        <button class="reply-btn" data-comment-target="repliesButton" data-action="click->comment#show_replies">
+          Hide <%= micropost.comments.size %> replies
+        </button>
+      <% else %>
+    </div>
+    <% end %>
+    <div class="reply-container-form" data-comment-target="replyForm">
+      <%= render "shared/reply_form", micropost: micropost %>
+    </div>
+    <div class="replies-container" data-comment-target="replies">
+      <div id="microposts">
+        <% micropost.comments.each do |comment| %>
+          <%= render "shared/reply", micropost: comment %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
