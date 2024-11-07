@@ -12,6 +12,46 @@
       <%= micropost.content %>
     </p>
   </div>
+  <div class="comment-bottom">
+    <div style="display: flex">
+      <button class="reply-btn" id="love-btn">
+        Love
+      </button>
+      <div class="react-comment-container">
+        <button class="react-comment love" style="">
+          <i class="fa-regular fa-face-grin-hearts"></i>
+        </button>
+        <button class="react-comment sad" >
+          <i class="fa-regular fa-face-frown"></i>
+        </button>
+        <button class="react-comment angry" >
+          <i class="fa-regular fa-face-angry"></i>
+        </button>
+      </div>
+    </div>
+    <div class="right">
+      <div style="display: flex">
+        <% if Random.rand(10) > 2 %>
+          <div class="reaction-stats love" style="">
+            <i class="fa-regular fa-face-grin-hearts"></i>
+            <span><%= Random.rand(10) %></span>
+          </div>
+        <% end %>
+        <% if Random.rand(10) > 2 %>
+          <div class="reaction-stats sad" >
+            <i class="fa-regular fa-face-frown"></i>
+            <span><%= Random.rand(10) %></span>
+          </div>
+        <% end %>
+        <% if Random.rand(10) > 2 %>
+          <div class="reaction-stats angry" >
+            <i class="fa-regular fa-face-angry"></i>
+            <span><%= Random.rand(10) %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
 <% end %>
 
