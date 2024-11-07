@@ -4,7 +4,6 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["replyButton", "replyForm", "replies", "repliesButton"]
   connect() {
-    console.log("connect to comment controller")
   }
 
   reply_toggle = () => {

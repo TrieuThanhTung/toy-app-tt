@@ -53,6 +53,14 @@ p {
   line-height: 1.7em;
 }
 
+.errors {
+  color: red;
+}
+
+.notice {
+  color: green;
+}
+
 /* footer */
 footer {
   margin-top: 45px;
@@ -300,9 +308,19 @@ span.image {
   margin: 10px 0;
 }
 
+.micropost-show {
+   margin-top: 80px;
+}
+
+.user-info {
+  display: flex;
+  justify-content: space-between
+}
+
 .micropost-content {
   margin: 20px;
 }
+
 // comment form
 #comment-form {
   margin-top: 60px;
@@ -314,6 +332,10 @@ span.image {
 }
 
 /* Container comment */
+.comment-container {
+  margin-top: 20px
+}
+
 .comment-body {
   background-color: rgba(119, 119, 119, 0.2);
   padding: 10px;
@@ -365,9 +387,8 @@ span.image {
   justify-content: right;
 }
 
-
 .comment-button {
-  width: 60px ;
+  width: 100px ;
   background-color: #1877f2;
   border: none;
   color: white;
@@ -396,12 +417,20 @@ span.image {
   background-color: #777777;
 }
 
-// reply button
+.reply-container-form {
+  margin: 20px 30px;
+  display: none;
+}
+
+.replies-container {
+  margin: 10px 30px;
+}
+
 /* Button reply */
 .reply-btn {
   background: none;
   border: none;
-  color: #65676b; /* Màu chữ xám nhạt */
+  color: #65676b;
   font-size: 14px;
   cursor: pointer;
   padding: 0;
@@ -411,7 +440,7 @@ span.image {
 }
 
 .reply-btn:hover {
-  color: #161718; /* Màu xanh khi hover */
+  color: #161718;
   text-decoration: underline;
 }
 
@@ -419,3 +448,10 @@ span.image {
   outline: none;
 }
 
+.timestamp {
+  float: right;
+}
+
+.reply-body {
+  margin: 30px 10px
+}

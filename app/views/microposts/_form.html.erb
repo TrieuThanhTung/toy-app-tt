@@ -1,6 +1,6 @@
 <%= form_with(model: micropost) do |form| %>
   <% if micropost.errors.any? %>
-    <div style="color: red">
+    <div class="errors">
       <h2><%= pluralize(micropost.errors.count, "error") %> prohibited this micropost from being saved:</h2>
 
       <ul>

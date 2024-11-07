@@ -1,7 +1,7 @@
 <%= form_with(model: @micropost,
               url: micropost_comments_url(@micropost),
               method: :post, class: 'comment-form', id: 'comment-form') do |f| %>
-  <div class="field comment-input comment-box" style="width: 100%">
+  <div class="field comment-input comment-box">
     <%= f.text_area :content, value: "",
                     class: "comment-input input-comment-reply", id: "input-comment",
                     placeholder: "Comment here..."

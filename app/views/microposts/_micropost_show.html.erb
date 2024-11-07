@@ -1,5 +1,5 @@
-<div style="margin-top: 60px" >
-  <div style="display: flex; justify-content: space-between">
+<div class="micropost-show">
+  <div class="user-info">
     <span class="user">
       Author: <%= link_to micropost.user.name, micropost.user %>
     </span>
@@ -12,16 +12,16 @@
   <p class="content micropost-content">
     <%= micropost.content %>
   </p>
-  <div style="width: 100px">
+  <div>
     <%= image_tag micropost.image if micropost.image.attached? %>
   </div>
-  <p class="timestamp" style="float: right">
+  <p class="timestamp">
     Posted <%= time_ago_in_words(micropost.created_at) %> ago.
   </p>
-  <div style="margin: 20px">
+  <div>
     <%= render "shared/comment_form" %>
   </div>
-  <div style="margin: 20px">
+  <div>
     <div id="microposts">
       <div id="microposts_<%= micropost.id %>"></div>
       <% micropost.comments.each do |comment| %>
