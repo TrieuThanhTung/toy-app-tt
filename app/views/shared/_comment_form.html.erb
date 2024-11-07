@@ -1,10 +1,12 @@
 <%= form_with(model: @micropost,
               url: micropost_comments_url(@micropost),
+              data: { controller: "comment", action: "turbo:submit-end->comment#clearTextarea" },
               method: :post, class: 'comment-form', id: 'comment-form') do |f| %>
-  <div class="field comment-input comment-box">
+  <div class="field comment-input comment-box" data-comment-target="form">
     <%= f.text_area :content, value: "",
                     class: "comment-input input-comment-reply", id: "input-comment",
-                    placeholder: "Comment here..."
+                    placeholder: "Comment here...",
+                    data: { comment_target: "textarea" }
     %>
     <div class="button-container">
       <%= f.submit "Comment", class: "comment-button", id: "button-submit" %>

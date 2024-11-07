@@ -1,7 +1,5 @@
 class CommentsController < ApplicationController
   def create
-    # @micropost = params[:comment_id] ? Micropost.find(params[:comment_id])
-    #                : Micropost.find(params[:micropost_id])
     @micropost = Micropost.find(params[:comment_id] || params[:micropost_id])
     new_comment = @micropost.comments.build(comment_params)
     new_comment.user = current_user

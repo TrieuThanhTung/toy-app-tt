@@ -2,8 +2,13 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="comment"
 export default class extends Controller {
-  static targets = ["replyButton", "replyForm", "replies", "repliesButton"]
+  static targets = ["replyButton", "replyForm", "replies", "repliesButton", "form", "textarea"]
   connect() {
+    this.formTarget.addEventListener("turbo:submit-end", this.clearTextarea.bind(this));
+  }
+
+  disconnect() {
+    this.formTarget.removeEventListener("turbo:submit-end", this.clearTextarea.bind(this));
   }
 
   reply_toggle = () => {
@@ -24,6 +29,12 @@ export default class extends Controller {
     } else {
       replies.style.display = "block"
       repliesButton.innerHTML = repliesButton.innerHTML.replace("Show", "Hide");
+    }
+  }
+
+  clearTextarea(event) {
+    if (event.detail.success) {
+      this.textareaTarget.value = '';
     }
   }
 }

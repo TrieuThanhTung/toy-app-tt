@@ -31,21 +31,3 @@
   </div>
 </div>
 
-
-<script type="text/javascript">
-    document.addEventListener("turbo:load", function() {
-        initializeCommentForm();
-    });
-    function initializeCommentForm() {
-        let form = document.getElementById("comment-form");
-        let textarea = document.getElementById("input-comment");
-        if (form && textarea) {
-            form.addEventListener("turbo:submit-end", (event) => {
-                if (event.detail.success) {
-                    textarea.value = ''
-                }
-            });
-        }
-    }
-</script>
-
