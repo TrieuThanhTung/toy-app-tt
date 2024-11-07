@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
                                                       partial: 'shared/comment',
                                                       locals: { micropost: @micropost })
           else
-            render turbo_stream: turbo_stream.append("microposts_#{@micropost.id}",
+            render turbo_stream: turbo_stream.prepend("microposts_#{@micropost.id}",
                                                       partial: 'shared/comment',
                                                       locals: { micropost: new_comment })
           end
