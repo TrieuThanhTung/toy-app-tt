@@ -1,21 +1,7 @@
 <%= turbo_frame_tag "reaction_form_#{micropost.id}", class: "flex" do %>
-  <% if current_user_react(micropost, current_user, 'love') %>
-    <button class="reply-btn reaction-icon love active" id="love-btn">
-      Love
-    </button>
-  <% elsif current_user_react(micropost, current_user, 'sad')%>
-    <button class="reply-btn reaction-icon sad active" id="love-btn">
-      Sad
-    </button>
-  <% elsif current_user_react(micropost, current_user, 'angry')%>
-    <button class="reply-btn reaction-icon angry active" id="love-btn">
-      Angry
-    </button>
-  <% else %>
-    <button class="reply-btn" id="love-btn">
-      Love
-    </button>
-  <% end %>
+  <button class="reply-btn reaction-icon <%= active_reaction_class(micropost, current_user) %>" id="love-btn">
+    <%= active_reaction_text(micropost, current_user) || 'Love' %>
+  </button>
 
   <div class="react-comment-container">
     <% %w(love sad angry).each do |reaction| %>
