@@ -434,10 +434,20 @@ span.image {
   font-size: 12px;
   cursor: pointer;
   padding: 0;
+  padding: 8px 16px;
   margin: 0 4px;
   font-weight: 600;
   transition: color 0.2s;
 }
+
+.reaction-post-main {
+  font-size: 18px !important;
+
+  button {
+    font-size: 16px !important;
+  }
+}
+
 
 .reply-btn:hover {
   color: #161718;
@@ -456,6 +466,11 @@ span.image {
   display: flex;
   justify-content: space-around;
   border-bottom: 1px solid lightgrey;
+  position: relative;
+}
+
+.po-relative {
+  position: relative;
 }
 
 .micropost-body {
@@ -515,12 +530,26 @@ span.image {
   color: hotpink;
 }
 
+.reaction-icon.love.active {
+  color: hotpink;
+}
+
 .reaction-icon.sad:hover {
   cursor: pointer;
   color: orange;
 }
 
+.reaction-icon.sad.active {
+  cursor: pointer;
+  color: orange;
+}
+
 .reaction-icon.angry:hover {
+  cursor: pointer;
+  color: red;
+}
+
+.reaction-icon.angry.active {
   cursor: pointer;
   color: red;
 }

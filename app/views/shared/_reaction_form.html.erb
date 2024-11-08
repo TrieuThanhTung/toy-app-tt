@@ -1,0 +1,63 @@
+<%= turbo_frame_tag "reaction_form_#{micropost.id}", class:"flex" do %>
+  <% if current_user_react(micropost, current_user, 'love') %>
+    <button class="reply-btn reaction-icon love active" id="love-btn">
+      Love
+    </button>
+  <% elsif current_user_react(micropost, current_user, 'sad')%>
+    <button class="reply-btn reaction-icon sad active" id="love-btn">
+      Sad
+    </button>
+  <% elsif current_user_react(micropost, current_user, 'angry')%>
+    <button class="reply-btn reaction-icon angry active" id="love-btn">
+      Angry
+    </button>
+  <% else %>
+    <button class="reply-btn" id="love-btn">
+      Love
+    </button>
+  <% end %>
+
+  <div class="react-comment-container">
+    <% if current_user_react(micropost, current_user, 'love') %>
+      <%= button_to micropost_react_path(micropost.id),
+                    params: {reaction_type: :love},
+                    class: "reaction-icon love active" do %>
+        <i class="fa-regular fa-face-grin-hearts"></i>
+      <% end %>
+    <% else %>
+      <%= button_to micropost_react_path(micropost.id),
+                    params: {reaction_type: :love},
+                    class: "reaction-icon love" do %>
+        <i class="fa-regular fa-face-grin-hearts"></i>
+      <% end %>
+    <% end %>
+
+    <% if current_user_react(micropost, current_user, 'sad') %>
+      <%= button_to micropost_react_path(micropost.id),
+                    params: {reaction_type: :sad},
+                    class: "reaction-icon sad active" do %>
+        <i class="fa-regular fa-face-frown"></i>
+      <% end %>
+    <% else %>
+      <%= button_to micropost_react_path(micropost.id),
+                    params: {reaction_type: :sad},
+                    class: "reaction-icon sad" do %>
+        <i class="fa-regular fa-face-frown"></i>
+      <% end %>
+    <% end %>
+
+    <% if current_user_react(micropost, current_user, 'angry') %>
+      <%= button_to micropost_react_path(micropost.id),
+                    params: {reaction_type: :angry},
+                    class: "reaction-icon angry active" do %>
+        <i class="fa-regular fa-face-angry"></i>
+      <% end %>
+    <% else %>
+      <%= button_to micropost_react_path(micropost.id),
+                    params: {reaction_type: :angry},
+                    class: "reaction-icon angry" do %>
+        <i class="fa-regular fa-face-angry"></i>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
