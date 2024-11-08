@@ -1,7 +1,6 @@
 class CommentsController < ApplicationController
   def create
-    @micropost = params[:comment_id] ? Micropost.find(params[:comment_id])
-                   : Micropost.find(params[:micropost_id])
+    @micropost = Micropost.find(params[:comment_id] || params[:micropost_id])
     new_comment = @micropost.comments.build(comment_params)
     new_comment.user = current_user
     respond_to do |format|
@@ -12,7 +11,7 @@ class CommentsController < ApplicationController
                                                       partial: 'shared/comment',
                                                       locals: { micropost: @micropost })
           else
-            render turbo_stream: turbo_stream.append("microposts_#{@micropost.id}",
+            render turbo_stream: turbo_stream.prepend("microposts_#{@micropost.id}",
                                                       partial: 'shared/comment',
                                                       locals: { micropost: new_comment })
           end
