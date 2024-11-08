@@ -451,6 +451,7 @@ span.image {
 .timestamp {
   float: right;
 }
+
 .reactions {
   display: flex;
   justify-content: space-around;
@@ -463,10 +464,18 @@ span.image {
   border-bottom: 1px solid lightgrey;
 }
 
-.reactions-stats {
+.stats-container {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid lightgrey;
+}
+
+.reactions-stats {
+  display: flex;
+}
+
+.flex {
+  display: flex;
 }
 
 .reaction-stats,
@@ -567,5 +576,5 @@ span.image {
 
 
 .reply-body {
-  margin: 30px 10px
+  margin: 20px 10px 0;
 }

@@ -9,16 +9,6 @@
       <% end %>
     </span>
   </div>
-  <p class="content micropost-content">
-    <%= micropost.content %>
-  </p>
-  <div>
-    <%= image_tag micropost.image if micropost.image.attached? %>
-  </div>
-  <p class="timestamp">
-    Posted <%= time_ago_in_words(micropost.created_at) %> ago.
-  </p>
-  <div>
   <div
     class="micropost-body"
   >
@@ -32,8 +22,8 @@
       Posted <%= time_ago_in_words(micropost.created_at) %> ago.
     </p>
   </div>
-  <div class="reactions-stats">
-    <div style="display: flex">
+  <div class="stats-container">
+    <div class="reactions-stats">
       <div class="reaction-stats love" style="">
         <i class="fa-regular fa-face-grin-hearts"></i>
         <span>1</span>
@@ -66,7 +56,7 @@
       <span>Angry</span>
     <% end %>
   </div>
-  <div style="margin: 40px 20px">
+  <div >
     <%= render "shared/comment_form" %>
   </div>
   <div>

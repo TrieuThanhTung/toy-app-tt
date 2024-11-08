@@ -11,10 +11,6 @@
         <%= micropost.content %>
       </p>
     </div>
-    <div>
-      <button class="reply-btn" data-comment-target="replyButton" data-action="click->comment#reply_toggle">
-        Reply
-      </button>
     <div class="comment-bottom">
       <div class="left" style="display: flex">
         <div style="display: flex">
@@ -65,9 +61,8 @@
         <button class="reply-btn" data-comment-target="repliesButton" data-action="click->comment#show_replies">
           Hide <%= micropost.comments.size %> replies
         </button>
-      <% else %>
+      <% end %>
     </div>
-    <% end %>
     <div class="reply-container-form" data-comment-target="replyForm">
       <%= render "shared/reply_form", micropost: micropost %>
     </div>
