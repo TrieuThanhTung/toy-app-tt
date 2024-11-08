@@ -542,7 +542,7 @@ span.image {
 }
 
 .react-comment-container:hover {
-  display: block;
+  display: flex;
 }
 
 .react-comment {
@@ -562,7 +562,7 @@ span.image {
 }
 
 #love-btn:hover + .react-comment-container {
-  display: block;
+  display: flex;
 }
 
 #love-btn::after {

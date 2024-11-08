@@ -67,6 +67,24 @@ class MicropostsController < ApplicationController
     end
   end
 
+  def react
+    reaction_type = params[:reaction_type]
+    @micropost = Micropost.find(params[:micropost_id])
+    @existence_reaction = Reaction.find_or_initialize_by(user_id: current_user.id, micropost_id: @micropost.id)
+    respond_to do |format|
+      if @existence_reaction.persisted? && @existence_reaction.reaction_type == reaction_type
+        format.html { redirect_to @micropost, status: :unprocessable_entity }
+      else
+        @existence_reaction.reaction_type = reaction_type
+        if @existence_reaction.save!
+          format.html { redirect_to @micropost, status: :created }
+        else
+          format.html { redirect_to @micropost, status: :unprocessable_entity }
+        end
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_micropost
