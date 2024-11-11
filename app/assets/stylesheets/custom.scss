@@ -39,6 +39,10 @@ h1 {
 
 $light_gray: #777;
 
+.application {
+  margin-top: 30px;
+}
+
 h2 {
   font-size: 1.2em;
   letter-spacing: -1px;
@@ -300,6 +304,10 @@ span.image {
   }
 }
 
+.follow_form {
+  width: 50%;
+}
+
 .users.follow {
   padding: 0;
 }
@@ -319,6 +327,21 @@ span.image {
 
 .micropost-content {
   margin: 20px;
+}
+
+.message-link {
+  display: block;
+  background-color: green;
+  align-content: center;
+  padding: 0 20px;
+  margin: 0 10px;
+  border-radius: 5px;
+  color: white;
+  height: 100%;
+}
+
+.message-link:hover {
+  color: white;
 }
 
 // comment form
@@ -603,7 +626,72 @@ span.image {
   height: 20px ;
 }
 
+.friend-container {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid grey;
+
+  h3 {
+    margin: 0 20px;
+  }
+}
 
 .reply-body {
   margin: 20px 10px 0;
 }
+
+.friend-avatar {
+  width: 40px;
+  height: 40px;
+}
+
+.messages-container {
+  height: 60vh;
+  overflow: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  overflow-anchor: auto !important
+}
+
+.message-container {
+  display: flex;
+  margin: 16px;
+}
+
+.message-container.sender {
+  display: flex;
+  justify-content: end;
+}
+
+.message {
+  max-width: 60%;
+  padding: 4px 8px;
+  background-color: rgba(128, 128, 128, 0.3);
+  border-radius: 10px 10px 10px 0;
+}
+
+.message.sender {
+  background-color: rgba(0, 0, 255, 0.4);
+  border-radius: 10px 10px 0 10px;
+}
+
+.message-form-container {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.message-form-input {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.message-form-submit {
+  width: 150px;
+  margin: 0 8px;
+  padding: 10px;
+}
+

@@ -1,0 +1,14 @@
+<div id="messages" class="messages-index">
+  <div class="header">
+    <%= render 'friends' %>
+  </div>
+  <div class="messages-container">
+    <div>
+      <% @messages.each do |message| %>
+        <%= render "message", message: message %>
+        <div class="anchor"></div>
+      <% end %>
+    </div>
+  </div>
+  <%= render "message_form" %>
+</div>

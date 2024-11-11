@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "reaction_form_#{micropost.id}", class: "flex" do %>
-  <button class="reply-btn reaction-icon <%= active_reaction_class(micropost, current_user) %>" id="love-btn">
+  <button class="reply-btn reaction-icon <%= active_reaction_class(micropost, current_user) %> active" id="love-btn">
     <%= active_reaction_text(micropost, current_user) || 'Love' %>
   </button>
 

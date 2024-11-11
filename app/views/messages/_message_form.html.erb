@@ -1,0 +1,4 @@
+<%= form_with model: @message, class: "message-form-container" do |form| %>
+  <%= form.text_field :content, placeholder: "Chat here...", class: "message-form-input" %>
+  <%= form.submit "Sent", class: "comment-button message-form-submit" %>
+<% end %>
