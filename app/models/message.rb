@@ -9,3 +9,4 @@ class Message < ApplicationRecord
           sender_id, recipient_id, recipient_id, sender_id)
   end
 end
+

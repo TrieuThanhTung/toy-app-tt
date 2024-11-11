@@ -1,8 +1,11 @@
-<div id="messages" class="messages-index">
+<div id="messages" class="messages-index" data-controller="chat">
   <div class="header">
     <%= render 'friends' %>
   </div>
   <div class="messages-container">
+    <% if @messages.size == 0 %>
+      <h2> Don't have any messages </h2>
+    <% end %>
     <div>
       <% @messages.each do |message| %>
         <%= render "message", message: message %>
@@ -12,3 +15,4 @@
   </div>
   <%= render "message_form" %>
 </div>
+

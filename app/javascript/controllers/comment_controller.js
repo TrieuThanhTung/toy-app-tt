@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="comment"
 export default class extends Controller {
-  static targets = ["replyButton", "replyForm", "replies", "repliesButton", "form", "textarea"]
+  static targets = ["replyButton", "replyForm", "replies", "repliesButton", "textarea"]
   connect() {
     this.formTarget.addEventListener("turbo:submit-end", this.clearTextarea.bind(this));
   }
