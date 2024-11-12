@@ -3,7 +3,7 @@
      data-recipient-user-id="<%= params[:user_id] %>"
 >
   <div class="header">
-    <%= render 'friends' %>
+    <%= render 'friends', user: @recipient %>
   </div>
   <div class="messages-container">
     <h2 data-chat-target="noMessage"

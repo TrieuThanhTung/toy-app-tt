@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   def index
+    @recipient = User.find(params[:user_id])
     @messages = Message.involve_user(current_user.id, params[:user_id])
   end
 
