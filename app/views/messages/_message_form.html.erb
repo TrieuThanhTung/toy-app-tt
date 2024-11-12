@@ -1,4 +1,10 @@
-<%= form_with model: @message, class: "message-form-container" do |form| %>
-  <%= form.text_field :content, placeholder: "Chat here...", class: "message-form-input" %>
+<%= form_with model: @message, class: "message-form-container",
+              data: {action: "turbo:submit-end->chat#clearTextInput"} do |form| %>
+  <%= form.text_field :content,
+                      placeholder: "Chat here...",
+                      class: "message-form-input",
+                      data: {chat_target: "textinput"}
+  %>
   <%= form.submit "Sent", class: "comment-button message-form-submit" %>
 <% end %>
+

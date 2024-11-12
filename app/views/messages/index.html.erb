@@ -1,15 +1,19 @@
-<div id="messages" class="messages-index" data-controller="chat">
+<div id="messages" class="messages-index" data-controller="chat"
+     data-current-user-id="<%= current_user.id %>"
+     data-recipient-user-id="<%= params[:user_id] %>"
+>
   <div class="header">
     <%= render 'friends' %>
   </div>
   <div class="messages-container">
-    <% if @messages.size == 0 %>
-      <h2> Don't have any messages </h2>
-    <% end %>
-    <div>
+    <h2 data-chat-target="noMessage"
+      class="<%= @messages.size > 0 ? "hidden" : "" %>"
+    >
+      Don't have any messages
+    </h2>
+    <div id="messages-container" data-chat-target="messagesContainer">
       <% @messages.each do |message| %>
         <%= render "message", message: message %>
-        <div class="anchor"></div>
       <% end %>
     </div>
   </div>
