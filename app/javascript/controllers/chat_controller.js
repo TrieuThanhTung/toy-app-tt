@@ -22,6 +22,7 @@ export default class extends Controller {
         const senderId = this.element.dataset.currentUserId
         const recipientUser = this.element.dataset.recipientUserId
         const noMes = this.noMessageTarget
+        console.log()
         return consumer.subscriptions.create(
             {channel: "ChatChannel", user_id: recipientUser},
             {
@@ -33,10 +34,11 @@ export default class extends Controller {
                     console.log("Connected to the chat channel");
                 },
                 received(data) {
-                    if(data.method === 'create') {
-                        if (data.message.sender_id.toString() === senderId) {
-                            messages.insertAdjacentHTML("beforeend",
-                                `<div id="message_${data.message.id}" class="message-container sender">
+                    switch (data.method) {
+                        case "create":
+                            if (data.message.sender_id.toString() === senderId) {
+                                messages.insertAdjacentHTML("beforeend",
+                                    `<div id="message_${data.message.id}" class="message-container sender">
                                         <div class="more-options-message">
                                           <button class="more-options-message-button">...</button>
                                           <ul class="more-options">
@@ -50,22 +52,31 @@ export default class extends Controller {
                                         </div>
                                       <span class="message sender">${data.message.content}</span>
                                     </div>`)
-                        } else {
-                            messages.insertAdjacentHTML("beforeend",
-                                `<div id="message_${data.message.id}" class="message-container">
+                            } else {
+                                messages.insertAdjacentHTML("beforeend",
+                                    `<div id="message_${data.message.id}" class="message-container">
                                         <span class="message">${data.message.content}</span>
                                    </div>`)
-                        }
-                        if(messages.children.length > 0) {
-                            noMes.style.display = 'none'
-                        } else {
-                            noMes.style.display = 'block'
-                        }
-                    }
-                    if(data.method === 'update') {
-                        const updatedMessage = document.querySelector(`#message_${data.message.id} .message`)
-                        updatedMessage.textContent = data.message.content
-                        console.log(updatedMessage)
+                            }
+                            if(messages.children.length > 0) {
+                                noMes.style.display = 'none'
+                            } else {
+                                noMes.style.display = 'block'
+                            }
+                            break
+                        case "update":
+                            const updatedMessage = document.querySelector(`#message_${data.message.id} .message`)
+                            updatedMessage.textContent = data.message.content
+                            if (data.message.sender_id.toString() !== recipientUser) {
+                                const overlay = document.getElementById(`overlay_${data.message.id}`)
+                                overlay.style.display = 'none'
+                            }
+                            break;
+                        case "delete":
+                            if (data.message.sender_id.toString() !== recipientUser) {
+                                const deletedMessage = document.querySelector(`#message_${data.message.id}`)
+                                deletedMessage.remove()
+                            }
                     }
                 },
             }
