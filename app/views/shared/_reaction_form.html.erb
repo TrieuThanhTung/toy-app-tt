@@ -1,0 +1,11 @@
+<%= turbo_frame_tag "reaction_form_#{micropost.id}", class: "flex" do %>
+  <button class="reply-btn reaction-icon <%= active_reaction_class(micropost, current_user) %>" id="love-btn">
+    <%= active_reaction_text(micropost, current_user) || 'Love' %>
+  </button>
+
+  <div class="react-comment-container">
+    <% %w(love sad angry).each do |reaction| %>
+      <%= render 'shared/reaction_button', micropost: micropost, reaction: reaction, active: current_user_react(micropost, current_user, reaction) %>
+    <% end %>
+  </div>
+<% end %>

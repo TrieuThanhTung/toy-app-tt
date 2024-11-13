@@ -21,6 +21,18 @@ RSpec.describe "Microposts", type: :request do
     }
   }
 
+  let(:valid_reaction) {
+    {
+      'reaction_type' => "love"
+    }
+  }
+
+  let(:invalid_reaction) {
+    {
+      'reaction_type' => "care"
+    }
+  }
+
   before do
     post login_path, params: {session: {email: user.email, password: 'password'}}
   end
@@ -59,4 +71,34 @@ RSpec.describe "Microposts", type: :request do
       end
     end
   end
+
+  describe "POST /microposts/:micropost_id/react" do
+
+    context "create a new reaction for posts or comments" do
+      it "works!" do
+        post micropost_react_path(micropost), params: valid_reaction
+        expect(Reaction.count).to eq(1)
+        expect(response).to have_http_status(:created)
+      end
+
+      it "raises an ArgumentError for an invalid reaction_type" do
+        expect {
+          post micropost_react_path(micropost), params: invalid_reaction
+        }.to raise_error(ArgumentError, "'care' is not a valid reaction_type")
+      end
+    end
+
+    context "remove a reaction" do
+      before do
+        post micropost_react_path(micropost), params: valid_reaction
+      end
+
+      it "works!" do
+        post micropost_react_path(micropost), params: valid_reaction
+        expect(Reaction.count).to eq(0)
+        expect(response).to have_http_status(:accepted)
+      end
+    end
+  end
 end
+

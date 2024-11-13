@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get "password_resets/edit"
   # get "comment/index"
   resources :microposts do
+    post "/react" => "microposts#react"
     resources :comments, only: [:create] do
       post "/reply" => "comments#create"
     end

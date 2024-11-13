@@ -11,19 +11,30 @@
         <%= micropost.content %>
       </p>
     </div>
-    <div>
-      <button class="reply-btn" data-comment-target="replyButton" data-action="click->comment#reply_toggle">
-        Reply
-      </button>
+    <div class="comment-bottom">
+      <div class="left flex">
+        <div class="flex">
+          <%= render "shared/reaction_form", micropost: micropost %>
+        </div>
+        <button class="reply-btn" data-comment-target="replyButton" data-action="click->comment#reply_toggle">
+          Reply
+        </button>
+      </div>
+      <div class="right">
+        <div class="flex">
+          <div class="reactions-stats" >
+            <%= render "shared/reaction_stats", micropost: micropost %>
+          </div>
+        </div>
+      </div>
     </div>
     <div>
       <% if micropost.comments.size > 0 %>
         <button class="reply-btn" data-comment-target="repliesButton" data-action="click->comment#show_replies">
           Hide <%= micropost.comments.size %> replies
         </button>
-      <% else %>
+      <% end %>
     </div>
-    <% end %>
     <div class="reply-container-form" data-comment-target="replyForm">
       <%= render "shared/reply_form", micropost: micropost %>
     </div>
@@ -36,3 +47,4 @@
     </div>
   </div>
 <% end %>
+

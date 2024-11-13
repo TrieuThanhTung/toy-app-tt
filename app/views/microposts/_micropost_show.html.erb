@@ -9,16 +9,40 @@
       <% end %>
     </span>
   </div>
-  <p class="content micropost-content">
-    <%= micropost.content %>
-  </p>
-  <div>
-    <%= image_tag micropost.image if micropost.image.attached? %>
+  <div
+    class="micropost-body"
+  >
+    <p class="content micropost-content">
+      <%= micropost.content %>
+    </p>
+    <div >
+      <%= image_tag micropost.image if micropost.image.attached? %>
+    </div>
+    <p align="right" class="timestamp">
+      Posted <%= time_ago_in_words(micropost.created_at) %> ago.
+    </p>
   </div>
-  <p class="timestamp">
-    Posted <%= time_ago_in_words(micropost.created_at) %> ago.
-  </p>
-  <div>
+  <div class="stats-container">
+    <div class="reactions-stats" >
+      <%= render "shared/reaction_stats", micropost: micropost %>
+    </div>
+    <% if micropost.comments.count > 0 %>
+      <div class="comment-stats">
+        <%= micropost.comments.count %>
+        comments
+      </div>
+    <% end %>
+  </div>
+  <div class="reactions">
+    <div class="reaction-post-main flex po-relative">
+      <%= render "shared/reaction_form", micropost: micropost %>
+    </div>
+    <button class="reaction-icon">
+      <i class="fa-regular fa-comment"></i>
+      <span>Comment</span>
+    </button>
+  </div>
+  <div >
     <%= render "shared/comment_form" %>
   </div>
   <div>
@@ -30,4 +54,5 @@
     </div>
   </div>
 </div>
+
 

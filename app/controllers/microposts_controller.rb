@@ -1,6 +1,8 @@
 class MicropostsController < ApplicationController
-  before_action :set_micropost, only: %i[ show edit update destroy ]
-  before_action :logged_in_user, only: [ :create, :destroy ]
+  include MicropostsHelper
+
+  before_action :set_micropost, only: %i[ show edit update destroy react ]
+  before_action :logged_in_user, only: [:create, :destroy]
   before_action :correct_user, only: :destroy
 
   # GET /microposts or /microposts.json
@@ -10,7 +12,6 @@ class MicropostsController < ApplicationController
 
   # GET /microposts/1 or /microposts/1.json
   def show
-    @micropost = Micropost.find(params[:id])
   end
 
   # GET /microposts/new
@@ -30,7 +31,6 @@ class MicropostsController < ApplicationController
     respond_to do |format|
       if @micropost.save
         flash[:success] = "Micropost created!"
-        # redirect_to root_url
         format.html { redirect_to root_url, notice: "Micropost was successfully created." }
         format.json { render :show, status: :created, location: @micropost }
       else
@@ -67,19 +67,44 @@ class MicropostsController < ApplicationController
     end
   end
 
+  def react
+    reaction_type = params[:reaction_type]
+    @reaction = Reaction.find_or_initialize_by(user_id: current_user.id, micropost_id: @micropost.id)
+    respond_to do |format|
+      if @reaction.persisted? && @reaction.reaction_type == reaction_type
+        @reaction.destroy!
+        format.turbo_stream {
+          render_react_turbo_stream(turbo_stream)
+        }
+        format.html { redirect_to @micropost, status: :accepted }
+      else
+        @reaction.reaction_type = reaction_type
+        if @reaction.save
+          format.turbo_stream {
+            render_react_turbo_stream(turbo_stream)
+          }
+          format.html { redirect_to @micropost, status: :created }
+        else
+          format.html { redirect_to @micropost, status: :unprocessable_entity }
+        end
+      end
+    end
+  end
+
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_micropost
-      @micropost = Micropost.find(params[:id])
-    end
+  def set_micropost
+    @micropost = Micropost.find(params[:id] || params[:micropost_id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path, alert: "Micropost not found"
+  end
 
-    # Only allow a list of trusted parameters through.
-    def micropost_params
-      params.require(:micropost).permit(:title, :content, :image)
-    end
+  # Only allow a list of trusted parameters through.
+  def micropost_params
+    params.require(:micropost).permit(:title, :content, :image)
+  end
 
-    def correct_user
-      @micropost = current_user.microposts.find_by(id: params[:id])
-      redirect_to root_url if @micropost.nil?
-    end
+  def correct_user
+    redirect_to root_url unless @micropost&.user == current_user
+  end
 end
+

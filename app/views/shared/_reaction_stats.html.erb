@@ -1,0 +1,22 @@
+<%= turbo_frame_tag "reactions_micropost_#{micropost.id}" do %>
+  <div class="flex">
+    <% if micropost.reactions.reaction_type_love.count > 0%>
+      <div class="reaction-stats love" >
+        <i class="fa-regular fa-face-grin-hearts"></i>
+        <span><%= micropost.reactions.reaction_type_love.count %></span>
+      </div>
+    <% end %>
+    <% if micropost.reactions.reaction_type_sad.count > 0 %>
+      <div class="reaction-stats sad" >
+        <i class="fa-regular fa-face-frown"></i>
+        <span><%= micropost.reactions.reaction_type_sad.count %></span>
+      </div>
+    <% end %>
+    <% if micropost.reactions.reaction_type_angry.count > 0 %>
+      <div class="reaction-stats angry" >
+        <i class="fa-regular fa-face-angry"></i>
+        <span><%= micropost.reactions.reaction_type_angry.count %></span>
+      </div>
+    <% end %>
+  </div>
+<% end %>

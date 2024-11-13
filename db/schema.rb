@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_30_031429) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_07_080835) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -60,6 +60,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_30_031429) do
     t.index ["user_id"], name: "index_providers_on_user_id"
   end
 
+  create_table "reactions", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "micropost_id", null: false
+    t.string "reaction_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["micropost_id"], name: "index_reactions_on_micropost_id"
+    t.index ["user_id"], name: "index_reactions_on_user_id"
+  end
+
   create_table "relationships", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "follower_id"
     t.integer "followed_id"
@@ -96,4 +106,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_30_031429) do
   add_foreign_key "microposts", "microposts", column: "parent_id"
   add_foreign_key "microposts", "users"
   add_foreign_key "providers", "users"
+  add_foreign_key "reactions", "microposts"
+  add_foreign_key "reactions", "users"
 end

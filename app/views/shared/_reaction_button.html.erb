@@ -1,0 +1,5 @@
+<%= button_to micropost_react_path(micropost.id),
+              params: { reaction_type: reaction },
+              class: "reaction-icon #{reaction} #{'active' if active}" do %>
+  <i class="fa-regular fa-face-<%= reaction_icon(reaction) %>"></i>
+<% end %>

@@ -11,7 +11,20 @@
       <%= micropost.content %>
     </p>
   </div>
+  <div class="comment-bottom">
+    <div class="flex">
+      <%= render "shared/reaction_form", micropost: micropost %>
+    </div>
+    <div class="right">
+      <div class="flex">
+        <div class="reactions-stats" >
+          <%= render "shared/reaction_stats", micropost: micropost %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <% end %>
+
 
 

@@ -430,14 +430,24 @@ span.image {
 .reply-btn {
   background: none;
   border: none;
-  color: #65676b;
-  font-size: 14px;
+  color: #6b6568;
+  font-size: 12px;
   cursor: pointer;
   padding: 0;
+  padding: 8px 16px;
   margin: 0 4px;
   font-weight: 600;
   transition: color 0.2s;
 }
+
+.reaction-post-main {
+  font-size: 18px !important;
+
+  button {
+    font-size: 16px !important;
+  }
+}
+
 
 .reply-btn:hover {
   color: #161718;
@@ -452,6 +462,148 @@ span.image {
   float: right;
 }
 
+.reactions {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid lightgrey;
+  position: relative;
+}
+
+.po-relative {
+  position: relative;
+}
+
+.micropost-body {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid lightgrey;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid lightgrey;
+}
+
+.reactions-stats {
+  display: flex;
+}
+
+.flex {
+  display: flex;
+}
+
+.reaction-stats,
+.comment-stats {
+  color: grey;
+  padding: 8px 8px;
+  border-radius: 5px;
+}
+
+.reaction-stats.love,
+.react-comment.love
+{
+  color: hotpink;
+}
+
+.reaction-stats.sad,
+.react-comment.sad{
+  color: orange;
+}
+
+.reaction-stats.angry,
+.react-comment.angry{
+  color: red;
+}
+
+.reaction-icon {
+  color: grey;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 5px;
+  border: none;
+  background-color: transparent;
+}
+
+.reaction-icon.love:hover {
+  cursor: pointer;
+  color: hotpink;
+}
+
+.reaction-icon.love.active {
+  color: hotpink;
+}
+
+.reaction-icon.sad:hover {
+  cursor: pointer;
+  color: orange;
+}
+
+.reaction-icon.sad.active {
+  cursor: pointer;
+  color: orange;
+}
+
+.reaction-icon.angry:hover {
+  cursor: pointer;
+  color: red;
+}
+
+.reaction-icon.angry.active {
+  cursor: pointer;
+  color: red;
+}
+
+.react-comment-container {
+  display: none;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  position: absolute;
+  top: -30px;
+  left: -10px;
+}
+
+.comment-bottom {
+  margin: 0 10px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.react-comment-container:hover {
+  display: flex;
+}
+
+.react-comment {
+  padding: 4px 8px;
+  border: none;
+  background-color: transparent;
+}
+
+.react-comment:hover {
+  border: none;
+  background-color: rgba(220, 220, 220, 0.5);
+  border-radius: 50%;
+}
+
+#love-btn {
+  position: relative;
+}
+
+#love-btn:hover + .react-comment-container {
+  display: flex;
+}
+
+#love-btn::after {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: -10px;
+  width: 50px;
+  height: 20px ;
+}
+
+
 .reply-body {
-  margin: 30px 10px
+  margin: 20px 10px 0;
 }
