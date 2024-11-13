@@ -1,4 +1,6 @@
 class MicropostsController < ApplicationController
+  include MicropostsHelper
+
   before_action :set_micropost, only: %i[ show edit update destroy react ]
   before_action :logged_in_user, only: [:create, :destroy]
   before_action :correct_user, only: :destroy
@@ -90,18 +92,6 @@ class MicropostsController < ApplicationController
   end
 
   private
-  def render_react_turbo_stream(turbo_stream)
-    render turbo_stream: [turbo_stream.replace("reactions_micropost_#{@micropost.id}",
-                                               partial: "shared/reaction_stats",
-                                               locals: { micropost: @micropost }),
-                          turbo_stream.replace("reaction_form_#{@micropost.id}",
-                                               partial: "shared/reaction_form",
-                                               locals: { micropost: @micropost }
-
-                          )
-    ]
-  end
-
   def set_micropost
     @micropost = Micropost.find(params[:id] || params[:micropost_id])
   rescue ActiveRecord::RecordNotFound
