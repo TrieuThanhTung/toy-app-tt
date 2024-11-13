@@ -20,6 +20,18 @@ module MicropostsHelper
     when 'angry' then 'angry'
     end
   end
+
+  def render_react_turbo_stream(turbo_stream)
+    render turbo_stream: [turbo_stream.replace("reactions_micropost_#{@micropost.id}",
+                                               partial: "shared/reaction_stats",
+                                               locals: { micropost: @micropost }),
+                          turbo_stream.replace("reaction_form_#{@micropost.id}",
+                                               partial: "shared/reaction_form",
+                                               locals: { micropost: @micropost }
+
+                          )
+    ]
+  end
 end
 
 
