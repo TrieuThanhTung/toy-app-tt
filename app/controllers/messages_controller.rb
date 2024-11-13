@@ -36,15 +36,5 @@ class MessagesController < ApplicationController
         message: @message
       })
     end
-    # respond_to do |format|
-    #   if current_user.id == @message.sender_id && @message.destroy
-    #     format.turbo_stream {
-    #       render turbo_stream: turbo_stream.remove("message_#{@message.id}")
-    #     }
-    #     format.html { redirect_to users_path, notice: 'Message was successfully destroyed.' }
-    #   else
-    #     format.html { render action: "destroy" }
-    #   end
-    # end
   end
 end

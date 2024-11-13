@@ -22,7 +22,6 @@ export default class extends Controller {
         const senderId = this.element.dataset.currentUserId
         const recipientUser = this.element.dataset.recipientUserId
         const noMes = this.noMessageTarget
-        console.log()
         return consumer.subscriptions.create(
             {channel: "ChatChannel", user_id: recipientUser},
             {
@@ -91,9 +90,7 @@ export default class extends Controller {
 
     openOverlay(event) {
         const messageId = event.target.getAttribute("data-message-id");
-        console.log(messageId)
         const overlay = document.getElementById(`overlay_${messageId}`)
-        console.log(overlay.style.display)
         if (!overlay.style.display || overlay.style.display === 'none') {
             overlay.style.display = 'flex'
         } else {
@@ -103,7 +100,6 @@ export default class extends Controller {
 
     closeOverlay(event) {
         const messageId = event.target.getAttribute("data-message-id");
-        console.log(messageId)
         const overlay = this.overlayTarget
         overlay.style.display = 'none'
     }
@@ -114,5 +110,4 @@ export default class extends Controller {
             this.textinputEditTarget.value = '';
         }
     }
-
 }
