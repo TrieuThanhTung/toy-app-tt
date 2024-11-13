@@ -3,7 +3,7 @@ import consumer from "channels/consumer";
 
 // Connects to data-controller="chat"
 export default class extends Controller {
-    static targets = ["textinput", "messagesContainer", "noMessage"]
+    static targets = ["textinput", "messagesContainer", "noMessage", "overlay", "editMessage", "textinputEdit", "closeEditBtn"]
 
     connect() {
         this.sub = this.createActionCableChannel();
@@ -32,19 +32,40 @@ export default class extends Controller {
                 disconnected() {
                     console.log("Connected to the chat channel");
                 },
-
                 received(data) {
-                    if (data.message.sender_id.toString() === senderId) {
-                        messages.insertAdjacentHTML("beforeend",
-                            `<div class="message-container sender"><span class="message sender">${data.message.content}</span></div>`)
-                    } else {
-                        messages.insertAdjacentHTML("beforeend",
-                            `<div class="message-container"><span class="message">${data.message.content}</span></div>`)
+                    if(data.method === 'create') {
+                        if (data.message.sender_id.toString() === senderId) {
+                            messages.insertAdjacentHTML("beforeend",
+                                `<div id="message_${data.message.id}" class="message-container sender">
+                                        <div class="more-options-message">
+                                          <button class="more-options-message-button">...</button>
+                                          <ul class="more-options">
+                                            <li class="item-option">
+                                                <a href="">Edit</a>
+                                            </li>
+                                            <li class="item-option">
+                                                <a data-turbo-method="delete" data-turbo-confirm="You sure?" href="/users/${data.message.recipient_id}/messages/${data.message.id}">Delete</a>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      <span class="message sender">${data.message.content}</span>
+                                    </div>`)
+                        } else {
+                            messages.insertAdjacentHTML("beforeend",
+                                `<div id="message_${data.message.id}" class="message-container">
+                                        <span class="message">${data.message.content}</span>
+                                   </div>`)
+                        }
+                        if(messages.children.length > 0) {
+                            noMes.style.display = 'none'
+                        } else {
+                            noMes.style.display = 'block'
+                        }
                     }
-                    if(messages.children.length > 0) {
-                        noMes.style.display = 'none'
-                    } else {
-                        noMes.style.display = 'block'
+                    if(data.method === 'update') {
+                        const updatedMessage = document.querySelector(`#message_${data.message.id} .message`)
+                        updatedMessage.textContent = data.message.content
+                        console.log(updatedMessage)
                     }
                 },
             }
@@ -56,4 +77,31 @@ export default class extends Controller {
             this.textinputTarget.value = '';
         }
     }
+
+    openOverlay(event) {
+        const messageId = event.target.getAttribute("data-message-id");
+        console.log(messageId)
+        const overlay = document.getElementById(`overlay_${messageId}`)
+        console.log(overlay.style.display)
+        if (!overlay.style.display || overlay.style.display === 'none') {
+            overlay.style.display = 'flex'
+        } else {
+            overlay.style.display = 'none'
+        }
+    }
+
+    closeOverlay(event) {
+        const messageId = event.target.getAttribute("data-message-id");
+        console.log(messageId)
+        const overlay = this.overlayTarget
+        overlay.style.display = 'none'
+    }
+
+    clearTextInputEdit(event){
+        if (event.detail.success) {
+
+            this.textinputEditTarget.value = '';
+        }
+    }
+
 }

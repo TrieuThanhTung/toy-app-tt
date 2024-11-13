@@ -1,0 +1,21 @@
+<div id="message_edit_<%= message.id %>" class="edit-message-container" >
+  <div class="header-edit">
+    <span class="icon-close" data-chat-target="closeEditBtn">
+      <i class="fa-solid fa-xmark" data-message-id="<%= message.id %>" data-action="click->chat#openOverlay"></i>
+    </span>
+  </div>
+  <%= form_with model: @message,
+                url: user_message_path(user_id: message.recipient_id, id: message.id),
+                method: :put,
+                class: "message-form-container",
+                data: {action: "turbo:submit-end->chat#clearTextInputEdit"} do |form| %>
+    <%= form.text_field :content,
+                        value: message.content,
+                        name: 'content',
+                        placeholder: "Chat here...",
+                        class: "message-form-input",
+                        data: {chat_target: 'textinputEdit'}
+    %>
+    <%= form.submit "Edit", class: "comment-button message-form-submit" %>
+  <% end %>
+</div>
