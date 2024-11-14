@@ -10,7 +10,7 @@
           Edit
         </li>
         <li class="item-option">
-          <%= link_to "Delete", user_message_path(message.recipient_id, message.id), data: { turbo_method: :delete, turbo_confirm: "You sure?" } %>
+          <%= link_to "Delete", user_message_path(params[:user_id], message.id), data: { turbo_method: :delete, turbo_confirm: "You sure?" } %>
         </li>
       </ul>
     </div>

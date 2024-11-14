@@ -5,7 +5,7 @@
     </span>
   </div>
   <%= form_with model: @message,
-                url: user_message_path(user_id: message.recipient_id, id: message.id),
+                url: user_message_path(user_id: params[:user_id], id: message.id),
                 method: :put,
                 class: "message-form-container",
                 data: {action: "turbo:submit-end->chat#clearTextInputEdit"} do |form| %>

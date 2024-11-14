@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_11_015950) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_14_030816) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -41,11 +41,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_11_015950) do
 
   create_table "messages", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "sender_id", null: false
-    t.bigint "recipient_id", null: false
     t.text "content", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["recipient_id"], name: "index_messages_on_recipient_id"
+    t.bigint "room_id", null: false
+    t.string "message_type", default: "text", null: false
+    t.index ["room_id"], name: "index_messages_on_room_id"
     t.index ["sender_id"], name: "index_messages_on_sender_id"
   end
 
@@ -58,6 +59,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_11_015950) do
     t.index ["parent_id"], name: "index_microposts_on_parent_id"
     t.index ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_microposts_on_user_id"
+  end
+
+  create_table "participants", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "room_id", null: false
+    t.string "role", default: "member", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_participants_on_room_id"
+    t.index ["user_id"], name: "index_participants_on_user_id"
   end
 
   create_table "providers", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -90,6 +101,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_11_015950) do
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
+  create_table "rooms", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "title", default: "", null: false
+    t.string "room_type", default: "private", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["title"], name: "index_rooms_on_title"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name"
     t.integer "age"
@@ -113,10 +132,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_11_015950) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "messages", "users", column: "recipient_id"
+  add_foreign_key "messages", "rooms"
   add_foreign_key "messages", "users", column: "sender_id"
   add_foreign_key "microposts", "microposts", column: "parent_id"
   add_foreign_key "microposts", "users"
+  add_foreign_key "participants", "rooms"
+  add_foreign_key "participants", "users"
   add_foreign_key "providers", "users"
   add_foreign_key "reactions", "microposts"
   add_foreign_key "reactions", "users"

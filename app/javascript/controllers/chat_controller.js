@@ -38,19 +38,40 @@ export default class extends Controller {
                             if (data.message.sender_id.toString() === senderId) {
                                 messages.insertAdjacentHTML("beforeend",
                                     `<div id="message_${data.message.id}" class="message-container sender">
-                                        <div class="more-options-message">
+                                            <div class="overlay" data-chat-target="overlay" id="overlay_${data.message.id}">
+                                              <div id="message_edit_${data.message.id}" class="edit-message-container">
+                                                <div class="header-edit">
+                                                  <span class="icon-close" data-chat-target="closeEditBtn">
+                                                    <i class="fa-solid fa-xmark" data-message-id="${data.message.id}" data-action="click->chat#openOverlay">
+                                                    </i>
+                                                  </span>
+                                                </div>
+                                                <form class="message-form-container" data-action="turbo:submit-end->chat#clearTextInputEdit"
+                                                action="/users/${recipientUser}/messages/${data.message.id}" accept-charset="UTF-8" method="post">
+                                                  <input type="hidden" name="_method" value="put" autocomplete="off">
+                                                  <input type="hidden" name="authenticity_token" value="RZ-260Qv6bibBOdYHHTvTn49VAwii2A-42na9TXiRTWmH1JUhV-ra3VTzLWWWKDDQ3Z72o19CQciwBU9rfvwyA"
+                                                  autocomplete="off">
+                                                  <input value="${data.message.content}" name="content" placeholder="Chat here..."
+                                                  class="message-form-input" data-chat-target="textinputEdit" type="text"
+                                                  id="content">
+                                                  <input type="submit" name="commit" value="Edit" class="comment-button message-form-submit"
+                                                  data-disable-with="Edit">
+                                                </form>
+                                              </div>
+                                            </div>
+                                             <div class="more-options-message">
                                           <button class="more-options-message-button">...</button>
                                           <ul class="more-options">
-                                            <li class="item-option">
-                                                <a href="">Edit</a>
+                                            <li class="item-option" data-chat-target="editMessage" data-message-id="${data.message.id}" data-action="click->chat#openOverlay">
+                                              Edit
                                             </li>
                                             <li class="item-option">
-                                                <a data-turbo-method="delete" data-turbo-confirm="You sure?" href="/users/${data.message.recipient_id}/messages/${data.message.id}">Delete</a>
+                                                <a data-turbo-method="delete" data-turbo-confirm="You sure?" href="/users/${recipientUser}/messages/${data.message.id}">Delete</a>
                                             </li>
                                           </ul>
                                         </div>
-                                      <span class="message sender">${data.message.content}</span>
-                                    </div>`)
+                                          <span class="message sender">${data.message.content}</span>
+                                        </div>`)
                             } else {
                                 messages.insertAdjacentHTML("beforeend",
                                     `<div id="message_${data.message.id}" class="message-container">
@@ -72,10 +93,8 @@ export default class extends Controller {
                             }
                             break;
                         case "delete":
-                            if (data.message.sender_id.toString() !== recipientUser) {
-                                const deletedMessage = document.querySelector(`#message_${data.message.id}`)
-                                deletedMessage.remove()
-                            }
+                            const deletedMessage = document.querySelector(`#message_${data.message.id}`)
+                            deletedMessage.remove()
                     }
                 },
             }
@@ -91,7 +110,7 @@ export default class extends Controller {
     openOverlay(event) {
         const messageId = event.target.getAttribute("data-message-id");
         const overlay = document.getElementById(`overlay_${messageId}`)
-        if (!overlay.style.display || overlay.style.display === 'none') {
+        if (!overlay.style || overlay.style.display === 'none') {
             overlay.style.display = 'flex'
         } else {
             overlay.style.display = 'none'
