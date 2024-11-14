@@ -8,12 +8,13 @@
                 url: user_message_path(user_id: params[:user_id], id: message.id),
                 method: :put,
                 class: "message-form-container",
-                data: {action: "turbo:submit-end->chat#clearTextInputEdit"} do |form| %>
+                data: {action: "submit->chat#updateMessage", message_id: "#{message.id}"} do |form| %>
     <%= form.text_field :content,
                         value: message.content,
                         name: 'content',
                         placeholder: "Chat here...",
                         class: "message-form-input",
+                        id: "edit_input_#{message.id}",
                         data: {chat_target: 'textinputEdit'}
     %>
     <%= form.submit "Edit", class: "comment-button message-form-submit" %>

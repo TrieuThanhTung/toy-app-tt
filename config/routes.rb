@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     member do
       get :following, :followers
     end
-    resources :messages, only: [:index, :create, :update, :destroy]
+    resources :messages, only: [:index, :update, :destroy]
   end
   resources :relationships, only: [ :create, :destroy ]
   root "static_pages#home"
