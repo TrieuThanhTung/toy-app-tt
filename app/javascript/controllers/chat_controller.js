@@ -67,8 +67,12 @@ export default class extends Controller {
             } else {
                 messages.insertAdjacentHTML("beforeend",
                     `<div id="message_${data.message.id}" class="message-container">
-                                        <span class="message">${data.message.content}</span>
-                                   </div>`)
+                                <div class="message-body">
+                                  <span class="message">
+                                    ${data.message.content}
+                                  </span>
+                                </div>
+                            </div>`)
             }
             if(messages.children.length > 0) {
                 noMes.style.display = 'none'
