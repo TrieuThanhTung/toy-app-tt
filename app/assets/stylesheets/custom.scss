@@ -662,12 +662,21 @@ span.image {
 .message-container {
   display: flex;
   margin: 16px;
-  align-items: center;
+  flex-direction: column;
 }
 
 .message-container.sender {
+  align-items: end;
+}
+
+.message-container-sender {
   display: flex;
   justify-content: end;
+}
+
+.info-edit-message {
+  font-size: 10px;
+  color: gray;
 }
 
 .more-options-message {
