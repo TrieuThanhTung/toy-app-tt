@@ -18,6 +18,11 @@ RSpec.describe ChatChannel, type: :channel do
       expect(subscription).to have_stream_from("chat_channel_private_#{chat_channel}")
     end
 
+    it "fail" do
+      subscribe()
+      expect(subscription).to be_rejected
+    end
+
   end
 
   context "when send message" do
