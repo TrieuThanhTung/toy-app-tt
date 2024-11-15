@@ -672,11 +672,16 @@ span.image {
 .message-container-sender {
   display: flex;
   justify-content: end;
+  position: relative;
 }
 
 .info-edit-message {
   font-size: 10px;
   color: gray;
+}
+
+.message-body {
+  display: flex;
 }
 
 .more-options-message {

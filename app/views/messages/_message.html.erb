@@ -16,8 +16,8 @@
         </ul>
       </div>
       <span class="message sender">
-      <%= message.content %>
-    </span>
+        <%= message.content %>
+      </span>
     </div>
     <% if message.created_at != message.updated_at %>
       <div class="info-edit-message">
@@ -27,9 +27,11 @@
   </div>
 <% else %>
   <div id="message_<%= message.id %>" class="message-container">
-    <span class="message">
-      <%= message.content %>
-    </span>
+    <div class="message-body">
+      <span class="message">
+        <%= message.content %>
+      </span>
+    </div>
     <% if message.created_at != message.updated_at %>
       <div class="info-edit-message">
         Edit at <%= message.updated_at.strftime("%Y-%m-%d %H:%M") %>
