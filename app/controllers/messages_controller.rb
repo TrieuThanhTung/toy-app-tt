@@ -8,7 +8,7 @@ class MessagesController < ApplicationController
     @room = Room.find_by(title: channel_name)
 
     if @room.nil?
-      create_private_room(channel_name, current_user.id, params[:user_id])
+      @room = create_private_room(channel_name, current_user.id, params[:user_id])
     end
     @messages = Message.where(room_id: @room.id)
     @messages = @messages.nil? ? Array.new : @messages

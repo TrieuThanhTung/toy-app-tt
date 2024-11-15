@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :message do
-    sender { nil }
-    recipient { nil }
+    sender { create(:user) }
+    room { create(:room) }
     content { "MyText" }
   end
 end
