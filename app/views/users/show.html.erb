@@ -9,18 +9,24 @@
       </h1>
     </section>
     <section class="stats">
-<%= render 'shared/stats' %>
-</section>
+      <%= render 'shared/stats' %>
+    </section>
   </aside>
   <div class="col-md-8">
-  <%= render 'follow_form' if logged_in? %>
-    <% if @user.microposts.any? %>
-      <h3>Microposts (<%= @user.microposts.count %>)</h3>
-      <%= will_paginate @microposts, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
-      <ol class="microposts">
-      <%= render @microposts %>
-      </ol>
-      <%= will_paginate @microposts, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
-    <% end %>
+    <div style="display: flex">
+      <%= render 'follow_form' if logged_in? %>
+      <div class="message_link-container">
+        <%= link_to "Messages",  user_messages_path(@user), class: "message-link" %>
+      </div>
+    </div>
+
+  <% if @user.microposts.any? %>
+    <h3>Microposts (<%= @user.microposts.count %>)</h3>
+    <%= will_paginate @microposts, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+    <ol class="microposts">
+    <%= render @microposts %>
+    </ol>
+    <%= will_paginate @microposts, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  <% end %>
   </div>
 </div>

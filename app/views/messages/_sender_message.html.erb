@@ -1,0 +1,40 @@
+<div id="message_<%= message.id %>" class="message-container sender">
+  <div class="message-container-sender">
+    <div class="overlay" data-chat-target="overlay" id="overlay_<%= message.id %>">
+      <div id="message_edit_<%= message.id %>" class="edit-message-container">
+        <div class="header-edit">
+                                      <span class="icon-close" data-chat-target="closeEditBtn">
+                                        <i class="fa-solid fa-xmark" data-message-id="<%= message.id %>" data-action="click->chat#openOverlay">
+                                        </i>
+                                      </span>
+        </div>
+        <form class="message-form-container" data-message-id="<%= message.id %>" data-action="submit->chat#updateMessage"
+              accept-charset="UTF-8" method="post">
+          <input type="hidden" name="_method" value="put" autocomplete="off">
+          <input value="<%= message.content %>" name="content" placeholder="Chat here..."
+                 class="message-form-input" id="edit_input_<%= message.id %>" data-chat-target="textinputEdit" type="text"
+                 id="content">
+          <input type="submit" name="commit" value="Edit" class="comment-button message-form-submit"
+                 data-disable-with="Edit">
+        </form>
+      </div>
+    </div>
+    <div class="more-options-message">
+      <button class="more-options-message-button">...</button>
+      <ul class="more-options">
+        <li class="item-option" data-chat-target="editMessage" data-message-id="<%= message.id %>" data-action="click->chat#openOverlay">
+          Edit
+        </li>
+        <li class="item-option">
+          <a data-turbo-method="delete" data-turbo-confirm="You sure?" href="/users/<%= params[:user_id] || recipient_id %>/messages/<%= message.id %>">Delete</a>
+        </li>
+      </ul>
+    </div>
+    <span class="message sender"><%= message.content %></span>
+  </div>
+  <% if message.created_at != message.updated_at %>
+    <div class="info-edit-message">
+      Edited - <%= message.updated_at.strftime("%Y-%m-%d %H:%M") %>
+    </div>
+  <% end %>
+</div>

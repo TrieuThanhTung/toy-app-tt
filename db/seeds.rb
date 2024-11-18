@@ -17,6 +17,7 @@ User.create!(name: "Example User",
       true,
       activated: true,
       activated_at: Time.zone.now)
+
 # Generate a bunch of additional users.
 99.times do |n|
   name = Faker::Name.name
@@ -44,3 +45,10 @@ following = users[2..50]
 followers = users[3..40]
 following.each { |followed| user.follow(followed) }
 followers.each { |follower| follower.follow(user) }
+
+20.times do |n|
+  sender_id = Faker::Number.between(from: 1, to: 2)
+  recipient_id = sender_id == 1 ? 2 : 1
+  content = Faker::Lorem.paragraph
+  Message.create!(sender_id: sender_id, recipient_id: recipient_id, content: content)
+end
