@@ -24,55 +24,10 @@ export default class extends Controller {
         const noMes = this.noMessageTarget
 
         function printNewMessage(data) {
-            if (data.message.sender_id.toString() === senderId) {
-                messages.insertAdjacentHTML("beforeend",
-                    `<div id="message_${data.message.id}" class="message-container sender">
-                            <div class="message-container-sender">
-                                <div class="overlay" data-chat-target="overlay" id="overlay_${data.message.id}">
-                                  <div id="message_edit_${data.message.id}" class="edit-message-container">
-                                    <div class="header-edit">
-                                      <span class="icon-close" data-chat-target="closeEditBtn">
-                                        <i class="fa-solid fa-xmark" data-message-id="${data.message.id}" data-action="click->chat#openOverlay">
-                                        </i>
-                                      </span>
-                                    </div>
-                                    <form class="message-form-container" data-message-id="${data.message.id}" data-action="submit->chat#updateMessage"
-                                            accept-charset="UTF-8" method="post">
-                                          <input type="hidden" name="_method" value="put" autocomplete="off">
-                                          <input type="hidden" name="authenticity_token" value="RZ-260Qv6bibBOdYHHTvTn49VAwii2A-42na9TXiRTWmH1JUhV-ra3VTzLWWWKDDQ3Z72o19CQciwBU9rfvwyA"
-                                          autocomplete="off">
-                                          <input value="${data.message.content}" name="content" placeholder="Chat here..."
-                                          class="message-form-input" id="edit_input_${data.message.id}" data-chat-target="textinputEdit" type="text"
-                                          id="content">
-                                          <input type="submit" name="commit" value="Edit" class="comment-button message-form-submit"
-                                          data-disable-with="Edit">
-                                    </form>
-                                  </div>
-                                </div>
-                                <div class="more-options-message">
-                                  <button class="more-options-message-button">...</button>
-                                  <ul class="more-options">
-                                    <li class="item-option" data-chat-target="editMessage" data-message-id="${data.message.id}" data-action="click->chat#openOverlay">
-                                      Edit
-                                    </li>
-                                    <li class="item-option">
-                                        <a data-turbo-method="delete" data-turbo-confirm="You sure?" href="/users/${recipientUser}/messages/${data.message.id}">Delete</a>
-                                    </li>
-                                  </ul>
-                                </div>
-                                <span class="message sender">${data.message.content}</span>
-                            </div>
-                        </div>`
-                )
+            if (data.message.data.sender_id.toString() === senderId) {
+                messages.insertAdjacentHTML("beforeend", data.message.sender_message)
             } else {
-                messages.insertAdjacentHTML("beforeend",
-                    `<div id="message_${data.message.id}" class="message-container">
-                                <div class="message-body">
-                                  <span class="message">
-                                    ${data.message.content}
-                                  </span>
-                                </div>
-                            </div>`)
+                messages.insertAdjacentHTML("beforeend", data.message.recipient_message)
             }
             if(messages.children.length > 0) {
                 noMes.style.display = 'none'
@@ -119,6 +74,9 @@ export default class extends Controller {
                         case "delete":
                             const deletedMessage = document.querySelector(`#message_${data.message.id}`)
                             deletedMessage.remove()
+                            break
+                        case "error":
+                            alert(data.message)
                     }
                 },
             }

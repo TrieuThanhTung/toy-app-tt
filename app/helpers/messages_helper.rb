@@ -6,7 +6,16 @@ module MessagesHelper
       Participant.create!(user_id: sender_id, room_id: room.id)
       Participant.create!(user_id: recipient_id, room_id: room.id)
       room
+    rescue ActiveRecord::RecordInvalid => e
+      broadcast_error_message(channel_name, e.message)
     end
+  end
+
+  def broadcast_message(channel, method = 'create', message)
+    ActionCable.server.broadcast(channel_name(channel), {
+      method: method,
+      message: message
+    })
   end
 
   def private_channel(first_user, second_user)
@@ -15,5 +24,15 @@ module MessagesHelper
 
   def channel_name(title)
     "chat_channel_#{title}"
+  end
+
+  def broadcast_error_message(channel, message)
+    broadcast_message(channel, 'error', {
+      message: message,
+    })
+  end
+
+  def authorized_to_action?(message, current_user_id)
+    message.present? && current_user_id == message.sender_id
   end
 end
