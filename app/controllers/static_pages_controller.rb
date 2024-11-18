@@ -2,10 +2,7 @@
 class StaticPagesController < ApplicationController
   def test
     SlackReportService.new.report
-
-    render json: {
-      Hahah: "oke"
-    }
+    redirect_to root_path
   end
 
   def home
