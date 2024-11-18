@@ -18,6 +18,7 @@ gem "stimulus-rails"
 gem "jbuilder"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
+gem 'slack-notifier', '~> 2.4'
 
 gem 'jquery-rails'
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
@@ -44,6 +45,7 @@ gem "will_paginate-bootstrap4"
 gem "active_storage_validations", "~> 1.1", ">= 1.1.4"
 gem "image_processing", "1.9.3"
 gem "mini_magick", "~> 4.11", ">= 4.11.0"
+gem 'whenever', require: false
 
 
 gem "devise"

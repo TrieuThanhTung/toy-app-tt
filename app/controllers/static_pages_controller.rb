@@ -1,5 +1,8 @@
+
 class StaticPagesController < ApplicationController
   def test
+    SlackReportService.new.report
+
     render json: {
       Hahah: "oke"
     }
