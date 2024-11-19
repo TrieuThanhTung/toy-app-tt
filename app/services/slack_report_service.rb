@@ -19,9 +19,9 @@ class SlackReportService
     [
       header_section("Yesterday's report: #{yesterday}"),
       divider,
-      info_section("New user: #{new_users}"),
-      info_section("New post: #{new_posts}"),
-      info_section("New comment: #{new_comments}"),
+      info_section("New users: #{new_users}"),
+      info_section("New posts: #{new_posts}"),
+      info_section("New comments: #{new_comments}"),
       most_commented_post_info(find_most_commented_post),
       divider
     ]
@@ -67,12 +67,12 @@ class SlackReportService
   end
 
   def most_commented_post_info(post)
-    info_section("The most commented post: http://localhost:3000/microposts/#{post[:id]}.") if post.present?
+    info_section("The most commented post: http://localhost:3000/microposts/#{post[:id]}") if post.present?
   end
 
   def find_most_commented_post
     sql_query = <<-SQL
-      WITH RECURSIVE descendants AS (
+      WITH RECURSIVE comments AS (
         SELECT id, parent_id, id AS root_post_id
         FROM microposts
         WHERE parent_id IS NULL
@@ -81,12 +81,12 @@ class SlackReportService
   
         SELECT p.id, p.parent_id, d.root_post_id
         FROM microposts AS p
-        INNER JOIN descendants AS d ON p.parent_id = d.id
+        INNER JOIN comments AS d ON p.parent_id = d.id
       )
-      SELECT root_post_id AS id, COUNT(*) - 1 AS total_descendants
-      FROM descendants
+      SELECT root_post_id AS id, COUNT(*) - 1 AS total_comments
+      FROM comments
       GROUP BY root_post_id
-      ORDER BY total_descendants DESC
+      ORDER BY total_comments DESC
       LIMIT 1;
     SQL
     res = ActiveRecord::Base.connection.select_one(sql_query)
