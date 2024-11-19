@@ -2,9 +2,19 @@
 require "slack-notifier"
 
 class SlackReportService
+  def initialize
+    if ENV["SLACK_WEBHOOK_URL"]
+      # Slack::Notifier is a gem that simplifies communication with Slack.
+      # It abstracts the HTTP request details, so we don't need to manually handle
+      # the formatting, headers, or network requests involved in sending a Slack message.
+      @notifier = Slack::Notifier.new ENV["SLACK_WEBHOOK_URL"], channel: "toy-app-report",
+                                    username: "Toy app reporter"
+    else
+      raise StandardError, "Missing SLACK_WEBHOOK_URL"
+    end
+  end
+
   def report
-    @notifier = Slack::Notifier.new ENV["SLACK_WEBHOOK_URL"], channel: "toy-app-report",
-                                   username: "Toy app reporter"
     @notifier.post(blocks: report_data)
   end
 
@@ -67,7 +77,9 @@ class SlackReportService
   end
 
   def most_commented_post_info(post)
-    info_section("The most commented post: http://localhost:3000/microposts/#{post[:id]}") if post.present?
+    if ENV["HOST"] && post.present?
+      info_section("The most commented post: #{ENV['HOST']}/#{post[:id]}")
+    end
   end
 
   def find_most_commented_post
@@ -80,7 +92,7 @@ class SlackReportService
         UNION ALL
   
         SELECT p.id, p.parent_id, d.root_post_id
-        FROM microposts AS p
+        FROM microposts AS pc  
         INNER JOIN comments AS d ON p.parent_id = d.id
       )
       SELECT root_post_id AS id, COUNT(*) - 1 AS total_comments
