@@ -1,9 +1,5 @@
 
 class StaticPagesController < ApplicationController
-  def test
-    SlackReportService.new.report
-    redirect_to root_path
-  end
 
   def home
     if logged_in?
