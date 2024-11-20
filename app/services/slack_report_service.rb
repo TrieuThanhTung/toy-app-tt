@@ -84,21 +84,16 @@ class SlackReportService
 
   def find_most_commented_post
     sql_query = <<-SQL
-      WITH RECURSIVE comments AS (
-        SELECT id, parent_id, id AS root_post_id
-        FROM microposts
-        WHERE parent_id IS NULL
-  
-        UNION ALL
-  
-        SELECT p.id, p.parent_id, d.root_post_id
-        FROM microposts AS pc  
-        INNER JOIN comments AS d ON p.parent_id = d.id
+      WITH comments AS (
+        SELECT m.parent_id AS parent_id, m.id AS id
+        FROM microposts AS m 
+        JOIN microposts AS c ON m.id = c.parent_id
       )
-      SELECT root_post_id AS id, COUNT(*) - 1 AS total_comments
-      FROM comments
-      GROUP BY root_post_id
-      ORDER BY total_comments DESC
+      SELECT m.id, COUNT(*) as total_cmt
+      FROM microposts AS m
+      LEFT JOIN comments AS c ON m.id = c.parent_id
+      GROUP BY m.id
+      ORDER BY total_cmt DESC
       LIMIT 1;
     SQL
     res = ActiveRecord::Base.connection.select_one(sql_query)
