@@ -7,7 +7,12 @@ class SentryService
   end
 
   def report
-    @slack_report.report(log_errors)
+    begin
+      @slack_report.report(log_errors)
+    rescue StandardError => e
+      Rails.logger.error(e)
+      Sentry.capture_exception(e)
+    end
   end
 
   private
@@ -25,7 +30,8 @@ class SentryService
   def sentry_log_link
     if ENV["SENTRY_EVENT"]
       "Details: #{ENV["SENTRY_EVENT"]}/#{@event_id}"
+    else
+      "Cannot get link to Sentry"
     end
   end
-
 end
