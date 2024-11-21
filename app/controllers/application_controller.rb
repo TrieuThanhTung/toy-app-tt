@@ -19,6 +19,7 @@ class ApplicationController < ActionController::Base
       yield
     rescue StandardError => e
       sentry = Sentry.capture_exception(e)
+      SentryService.new(sentry.event_id, e).report
       raise e
     end
   end

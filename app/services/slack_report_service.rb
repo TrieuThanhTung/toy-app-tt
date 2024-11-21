@@ -2,6 +2,7 @@
 require "slack-notifier"
 
 class SlackReportService
+  include SlackReport
   def initialize
     if ENV["SLACK_WEBHOOK_URL"]
       # Slack::Notifier is a gem that simplifies communication with Slack.
@@ -14,11 +15,15 @@ class SlackReportService
     end
   end
 
-  def report
+  def report(report_data)
     @notifier.post(blocks: report_data)
   end
 
-  def report_data
+  def daily_report
+    report(report_data)
+  end
+
+    def report_data
     yesterday = Date.yesterday
     yesterday_range = yesterday.all_day
 
@@ -38,31 +43,6 @@ class SlackReportService
   end
 
   private
-  def divider
-    {
-      type: 'divider'
-    }
-  end
-
-  def header_section(text)
-    {
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: "*#{text}*"
-      }
-    }
-  end
-
-  def info_section(text)
-    {
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: text
-      }
-    }
-  end
 
   def count_new_users(range)
     User.where(created_at: range).count
