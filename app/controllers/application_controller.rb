@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
+  around_action :set_sentry_context
   allow_browser versions: :modern
   include SessionsHelper
+
 
   private
   def logged_in_user
@@ -12,31 +14,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
-  # rescue_from StandardError, with: :render_server_error
-
-  # private
-
-  # def render_not_found
-  #   render json: { error: "Record not found" }, status: :not_found
-  # end
-
-  # def render_server_error(e)
-  #   render json: { message: "Internal server error handler + #{e.message}" }, status: :internal_server_error
-  # end
-
-  # rescue_from StandardError, with: :handle_exception
-
-  # private
-
-  # def handle_exception(e)
-  #   case e
-  #   when ActiveRecord::RecordNotFound
-  #       render json: { erros: "Record not found", message: e.message }, status: :not_found
-  #   when ActionController::RoutingError
-  #       render json: { error: "Route not found" }, status: :not_found
-  #   else
-  #       render json: { error: "Internal server error", message: e.message }, status: :internal_server_error
-  #   end
-  # end
+  def set_sentry_context
+    begin
+      yield
+    rescue StandardError => e
+      sentry = Sentry.capture_exception(e)
+      SentryService.new(sentry.event_id, e).report
+      raise e
+    end
+  end
 end

@@ -47,6 +47,9 @@ gem "image_processing", "1.9.3"
 gem "mini_magick", "~> 4.11", ">= 4.11.0"
 gem 'whenever', require: false
 
+gem "stackprof"
+gem "sentry-ruby"
+gem "sentry-rails"
 
 gem "devise"
 gem "omniauth-google-oauth2"
