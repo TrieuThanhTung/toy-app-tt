@@ -1,6 +1,9 @@
 name: TOY-APP-CI
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
@@ -8,6 +11,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
 
     services:
       mysql:
@@ -34,29 +39,11 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Install gem
-        run: |
-          gem install bundler
-          bundle install
-
-
-      - name: Set up database
-        env:
-          RAILS_ENV: test
-        run: |
-          bin/rails db:create
-          bin/rails db:migrate
+      - name: Test
+        run: bundle exec rspec
 
       - name: Run RuboCop
         run: bundle exec rubocop
-
-      - name: Run RSpec tests
-        env:
-          RAILS_ENV: test
-          DATABASE_URL: mysql2://127.0.0.1:3306
-        run: |
-          bin/rails db:test:prepare
-          bundle exec rspec
 
 
 
