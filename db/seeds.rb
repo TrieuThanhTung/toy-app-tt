@@ -18,6 +18,14 @@ User.create!(name: "Example User",
       activated: true,
       activated_at: Time.zone.now)
 
+User.create!(name: "Example Second User",
+             email: "rails2@gmail.org",
+             password:
+               "abcd1234",
+             password_confirmation: "abcd1234",
+             activated: true,
+             activated_at: Time.zone.now)
+
 # Generate a bunch of additional users.
 99.times do |n|
   name = Faker::Name.name
@@ -33,10 +41,9 @@ User.create!(name: "Example User",
 end
 
 100.times do |n|
-  title = Faker::Book.title
   content = Faker::Lorem.paragraph
   user_id = 1
-  Micropost.create!(title: title, content: content, user_id: user_id)
+  Micropost.create!(content: content, user_id: user_id)
 end
 
 users = User.all
@@ -45,10 +52,3 @@ following = users[2..50]
 followers = users[3..40]
 following.each { |followed| user.follow(followed) }
 followers.each { |follower| follower.follow(user) }
-
-20.times do |n|
-  sender_id = Faker::Number.between(from: 1, to: 2)
-  recipient_id = sender_id == 1 ? 2 : 1
-  content = Faker::Lorem.paragraph
-  Message.create!(sender_id: sender_id, recipient_id: recipient_id, content: content)
-end
