@@ -11,17 +11,21 @@ jobs:
 
     services:
       mysql:
-        image: mysql
+        image: mysql:latest
         env:
-          MYSQL_ROOT_PASSWORD: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
         ports:
           - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
-      - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl default-mysql-client libjemalloc2 libvips
 
-      - name: Check out code
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y default-mysql-client libjemalloc2 libvips
+
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Set up Ruby
@@ -30,24 +34,23 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Install dependencies
-        run: |
-          gem install bundler
-          bundle install
-
       - name: Set up database
+        env:
+          RAILS_ENV: test
+        run: |
+          bin/rails db:create
+          bin/rails db:schema:load
+
+      - name: Run RuboCop
+        run: bundle exec rubocop
+
+      - name: Run RSpec tests
         env:
           RAILS_ENV: test
           DATABASE_URL: mysql2://127.0.0.1:3306
         run: |
-          bin/rails db:create
-          bin/rails db:migrate
-          bin/rails db:seed
-
-      - name: Run RSpec
-        run: |
+          bin/rails db:test:prepare
           bundle exec rspec
 
-      - name: Run RuboCop
-        run: |
-          bundle exec rubocop
+
+
