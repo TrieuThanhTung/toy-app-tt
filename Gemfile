@@ -68,7 +68,6 @@ group :development, :test do
   gem "rspec-rails", "~> 7.0.0"
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
-  gem "error_highlight", ">= 0.6.0", platforms: [ :ruby ]
 end
 
 group :development do
