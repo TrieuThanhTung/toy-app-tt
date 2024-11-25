@@ -34,6 +34,10 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      - name: Update Bundler
+        run: gem install bundler
+
+
       - name: Set up database
         env:
           RAILS_ENV: test
