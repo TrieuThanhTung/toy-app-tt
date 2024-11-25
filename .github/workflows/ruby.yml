@@ -34,8 +34,10 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Update Bundler
-        run: gem install bundler
+      - name: Install gem
+        run: |
+          gem install bundler
+          bundle install
 
 
       - name: Set up database
@@ -43,7 +45,7 @@ jobs:
           RAILS_ENV: test
         run: |
           bin/rails db:create
-          bin/rails db:schema:load
+          bin/rails db:migrate
 
       - name: Run RuboCop
         run: bundle exec rubocop
