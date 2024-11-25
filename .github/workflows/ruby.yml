@@ -1,4 +1,4 @@
-name: CI
+name: TOY-APP-CI
 
 on:
   pull_request:
@@ -13,19 +13,22 @@ jobs:
       mysql:
         image: mysql
         env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_ROOT_PASSWORD: root
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
+      - name: Install packages
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl default-mysql-client libjemalloc2 libvips
+
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.1.6
+          ruby-version: .ruby-version
+          bundler-cache: true
 
       - name: Install dependencies
         run: |
@@ -35,16 +38,16 @@ jobs:
       - name: Set up database
         env:
           RAILS_ENV: test
+          DATABASE_URL: mysql2://127.0.0.1:3306
         run: |
-          bin/rails db:prepare
           bin/rails db:create
           bin/rails db:migrate
           bin/rails db:seed
 
-      - name: Run RuboCop
-        run: |
-          bundle exec rubocop
-
       - name: Run RSpec
         run: |
           bundle exec rspec
+
+      - name: Run RuboCop
+        run: |
+          bundle exec rubocop
