@@ -13,31 +13,11 @@ cd toy-app-tt
 ```
 
 2. **Set Up Environment Variables**
-   Create a .env file in the root directory with the following format and fill in the values as needed:
-
+   Create a .env file in the root directory and run command:
 ```bash
-GITHUB_CLIENT_ID=*************************
-GITHUB_CLIENT_SECRET=*************************
-
-GOOGLE_CLIENT_ID=*************************
-GOOGLE_CLIENT_SECRET=*************************
-
-FACEBOOK_CLIENT_ID=*************************
-FACEBOOK_CLIENT_SECRET=*************************
-
-SLACK_WEBHOOK_URL=*************************
-
-HOST=http://localhost:3000
-
-SENTRY_DSN=*************************
-SENTRY_EVENT=*************************
-
-DATABASE_USER=your_database_user
-DATABASE_PASSWORD=your_database_password
-DATABASE_HOST=db
-
-SECRET_KEY_BASE=*************************
+cp .env.example .env
 ```
+with the following format and fill in the values as needed.
 3. **Build and Start Docker Containers**
    In the project directory, run the following commands in order:
 ```
