@@ -21,7 +21,7 @@ module MicropostsHelper
     end
   end
 
-  def render_react_turbo_stream(turbo_stream)app/channels/chat_channel.rb
+  def render_react_turbo_stream(turbo_stream)
     render turbo_stream: [ turbo_stream.replace("reactions_micropost_#{@micropost.id}",
                                                partial: "shared/reaction_stats",
                                                locals: { micropost: @micropost }),
