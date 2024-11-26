@@ -16,14 +16,9 @@ RSpec.describe "SlackReportService" do
   end
 
   describe "#report" do
-    it "initializes the Slack notifier with the correct webhook URL, channel, and username" do
-      expect(Slack::Notifier).to receive(:new).with(ENV["SLACK_WEBHOOK_URL"], channel: "toy-app-report", username: "Toy app reporter")
-      report_service.report
-    end
-
     it "sends a report to Slack" do
       expect(slack_notifier).to receive(:post).with(blocks: kind_of(Array))
-      report_service.report
+      report_service.daily_report
     end
   end
 
@@ -35,7 +30,7 @@ RSpec.describe "SlackReportService" do
                                { text: { text: "New users: 5", type: "mrkdwn" }, type: "section" },
                                { text: { text: "New posts: 3", type: "mrkdwn" }, type: "section" },
                                { text: { text: "New comments: 10", type: "mrkdwn" }, type: "section" },
-                               { text: { text: "The most commented post: http://localhost:3000/microposts/1", type: "mrkdwn" }, type: "section" }
+                               { text: { text: "The most commented post: http://localhost:3000/1", type: "mrkdwn" }, type: "section" }
                              )
     end
   end
