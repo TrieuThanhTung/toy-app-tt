@@ -4,6 +4,6 @@ class Participant < ApplicationRecord
 
   enum :role, {
     admin: "admin",
-    member: "member",
+    member: "member"
   }, prefix: true
 end

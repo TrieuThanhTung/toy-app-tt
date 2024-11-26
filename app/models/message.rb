@@ -9,4 +9,3 @@ class Message < ApplicationRecord
     image: "image"
   }
 end
-

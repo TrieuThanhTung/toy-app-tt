@@ -11,7 +11,7 @@ RSpec.describe "Microposts", type: :request do
 
   let(:valid_comment) {
     {
-      'content' => "content",
+      'content' => "content"
     }
   }
 
@@ -34,11 +34,10 @@ RSpec.describe "Microposts", type: :request do
   }
 
   before do
-    post login_path, params: {session: {email: user.email, password: 'password'}}
+    post login_path, params: { session: { email: user.email, password: 'password' } }
   end
 
   describe "POST /microposts/:micropost_id/comments" do
-
     context "create a new comment" do
       it "works!" do
         post micropost_comments_path(micropost), params: { micropost: valid_comment }
@@ -73,7 +72,6 @@ RSpec.describe "Microposts", type: :request do
   end
 
   describe "POST /microposts/:micropost_id/react" do
-
     context "create a new reaction for posts or comments" do
       it "works!" do
         post micropost_react_path(micropost), params: valid_reaction
@@ -101,4 +99,3 @@ RSpec.describe "Microposts", type: :request do
     end
   end
 end
-

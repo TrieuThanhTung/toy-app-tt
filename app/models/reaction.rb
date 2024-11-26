@@ -9,4 +9,3 @@ class Reaction < ApplicationRecord
     angry: "angry"
   }, prefix: true
 end
-

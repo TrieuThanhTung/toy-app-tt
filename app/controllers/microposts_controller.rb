@@ -2,7 +2,7 @@ class MicropostsController < ApplicationController
   include MicropostsHelper
 
   before_action :set_micropost, only: %i[ show edit update destroy react ]
-  before_action :logged_in_user, only: [:create, :destroy]
+  before_action :logged_in_user, only: [ :create, :destroy ]
   before_action :correct_user, only: :destroy
 
   # GET /microposts or /microposts.json
@@ -25,7 +25,6 @@ class MicropostsController < ApplicationController
 
   # POST /microposts or /microposts.json
   def create
-
     @micropost = current_user.microposts.build(micropost_params)
     @micropost.image.attach(params[:micropost][:image])
     respond_to do |format|
@@ -92,6 +91,7 @@ class MicropostsController < ApplicationController
   end
 
   private
+
   def set_micropost
     @micropost = Micropost.find(params[:id] || params[:micropost_id])
   rescue ActiveRecord::RecordNotFound
@@ -107,4 +107,3 @@ class MicropostsController < ApplicationController
     redirect_to root_url unless @micropost&.user == current_user
   end
 end
-

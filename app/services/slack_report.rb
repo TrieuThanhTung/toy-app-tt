@@ -1,15 +1,15 @@
 module SlackReport
   def divider
     {
-      type: 'divider'
+      type: "divider"
     }
   end
 
   def header_section(text)
     {
-      type: 'section',
+      type: "section",
       text: {
-        type: 'mrkdwn',
+        type: "mrkdwn",
         text: "*#{text}*"
       }
     }
@@ -17,9 +17,9 @@ module SlackReport
 
   def info_section(text)
     {
-      type: 'section',
+      type: "section",
       text: {
-        type: 'mrkdwn',
+        type: "mrkdwn",
         text: text
       }
     }

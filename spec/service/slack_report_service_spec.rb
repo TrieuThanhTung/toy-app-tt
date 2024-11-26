@@ -32,12 +32,11 @@ RSpec.describe "SlackReportService" do
       report_data = report_service.report_data
 
       expect(report_data).to include(
-                               {:text=>{:text=>"New users: 5", :type=>"mrkdwn"}, :type=>"section"},
-                               {:text=>{:text=>"New posts: 3", :type=>"mrkdwn"}, :type=>"section"},
-                               {:text=>{:text=>"New comments: 10", :type=>"mrkdwn"}, :type=>"section"},
-                               {:text=>{:text=>"The most commented post: http://localhost:3000/microposts/1", :type=>"mrkdwn"}, :type=>"section"}
+                               { text: { text: "New users: 5", type: "mrkdwn" }, type: "section" },
+                               { text: { text: "New posts: 3", type: "mrkdwn" }, type: "section" },
+                               { text: { text: "New comments: 10", type: "mrkdwn" }, type: "section" },
+                               { text: { text: "The most commented post: http://localhost:3000/microposts/1", type: "mrkdwn" }, type: "section" }
                              )
     end
   end
 end
-

@@ -1,4 +1,4 @@
-env :PATH, ENV['PATH']
+env :PATH, ENV["PATH"]
 
 set :environment, "development"
 set :output, "./log/cron_log.log"

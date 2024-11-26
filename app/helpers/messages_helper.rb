@@ -11,7 +11,7 @@ module MessagesHelper
     end
   end
 
-  def broadcast_message(channel, method = 'create', message)
+  def broadcast_message(channel, method = "create", message)
     ActionCable.server.broadcast(channel_name(channel), {
       method: method,
       message: message
@@ -19,7 +19,7 @@ module MessagesHelper
   end
 
   def private_channel(first_user, second_user)
-    "private_#{[first_user.to_s, second_user.to_s].sort.join("_")}"
+    "private_#{[ first_user.to_s, second_user.to_s ].sort.join("_")}"
   end
 
   def channel_name(title)
@@ -27,8 +27,8 @@ module MessagesHelper
   end
 
   def broadcast_error_message(channel, message)
-    broadcast_message(channel, 'error', {
-      message: message,
+    broadcast_message(channel, "error", {
+      message: message
     })
   end
 
