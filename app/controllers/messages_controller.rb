@@ -12,13 +12,13 @@ class MessagesController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
-      @message = Message.new(sender_id: current_user.id,
+      message = Message.new(sender_id: current_user.id,
                              room_id: @room.id,
                              message_type: :text,
                              content: params[:content])
-      broadcast_message(@channel_name, "create", @message)
-    rescue ActiveRecord::RecordInvalid => e
-      broadcast_error_message(@channel_name, e.message)
+      broadcast_message(@channel_name, "create", message)
+    rescue ActiveRecord::RecordInvalid => exception
+      broadcast_error_message(@channel_name, exception.message)
     end
   end
 
@@ -32,10 +32,11 @@ class MessagesController < ApplicationController
   end
 
   def destroy
-    if authorized_to_action?(@message, current_user.id) && @message.destroy
+    current_user_id = current_user.id
+    if authorized_to_action?(@message, current_user_id) && @message.destroy
       broadcast_message(@channel_name, "delete", @message)
     else
-      broadcast_error_message(private_channel(current_user.id, params[:user_id]), "Update message fail.")
+      broadcast_error_message(private_channel(current_user_id, params[:user_id]), "Update message fail.")
     end
   end
 
@@ -46,10 +47,7 @@ class MessagesController < ApplicationController
   end
 
   def set_room_or_create
-    @room = Room.find_by(title: @channel_name)
-    if @room.nil?
-      @room = create_private_room(@channel_name, current_user.id, params[:user_id])
-    end
+    @room ||= Room.find_by(title: @channel_name) || create_private_room(@channel_name, current_user.id, params[:user_id])
   end
 
   def set_channel_name
