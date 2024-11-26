@@ -18,6 +18,7 @@ cd toy-app-tt
 cp .env.example .env
 ```
 with the following format and fill in the values as needed.
+
 3. **Build and Start Docker Containers**
    In the project directory, run the following commands in order:
 ```
