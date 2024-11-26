@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class OmniauthService
-
   class << self
     def from_omniauth(auth)
       provider = find_provider(auth)

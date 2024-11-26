@@ -5,6 +5,6 @@ class Room < ApplicationRecord
 
   enum :room_type, {
     private: "private",
-    group: "group",
+    group: "group"
   }, prefix: true
 end

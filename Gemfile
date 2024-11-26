@@ -12,15 +12,15 @@ gem "puma", ">= 5.0"
 gem "importmap-rails"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
-# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+# Hotwire"s modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 # Use Redis adapter to run Action Cable in production
 gem "redis", ">= 4.0.1"
-gem 'slack-notifier', '~> 2.4'
+gem "slack-notifier", "~> 2.4"
 
-gem 'jquery-rails'
+gem "jquery-rails"
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
@@ -33,7 +33,7 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 gem "bootstrap-sass", "~> 3.4", ">= 3.4.1"
-gem 'stimulus-rails'
+gem "stimulus-rails"
 
 gem "bcrypt", "~> 3.1", ">= 3.1.20"
 gem "faker", "~> 3.4", ">= 3.4.2"
@@ -45,7 +45,7 @@ gem "will_paginate-bootstrap4"
 gem "active_storage_validations", "~> 1.1", ">= 1.1.4"
 gem "image_processing", "1.9.3"
 gem "mini_magick", "~> 4.11", ">= 4.11.0"
-gem 'whenever', require: false
+gem "whenever", require: false
 
 gem "stackprof"
 gem "sentry-ruby"
@@ -62,7 +62,7 @@ gem "omniauth-facebook"
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
-  gem 'factory_bot_rails'
+  gem "factory_bot_rails"
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
   gem "rspec-rails", "~> 7.0.0"
@@ -75,12 +75,12 @@ group :development do
   gem "web-console"
 
   # Highlight the fine-grained location where an error occurred [https://github.com/ruby/error_highlight]
-  gem "error_highlight", ">= 0.4.0", platforms: [ :ruby ]
+  gem "error_highlight", "~> 0.3.0", platforms: [ :ruby ]
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-  gem 'shoulda-matchers', '~> 6.0'
+  gem "shoulda-matchers", "~> 6.0"
 end

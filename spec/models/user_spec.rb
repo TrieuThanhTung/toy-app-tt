@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-
   it "user is valid without age" do
     user = User.new(name: "test-name", email: "test-email@gmai.com", password: "password")
     expect(user).to be_valid

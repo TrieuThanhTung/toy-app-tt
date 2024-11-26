@@ -8,6 +8,6 @@ class CreateProviders < ActiveRecord::Migration[7.2]
       t.timestamps
     end
 
-    add_index :providers, [:provider_name, :uid], unique: true
+    add_index :providers, [ :provider_name, :uid ], unique: true
   end
 end

@@ -6,13 +6,13 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if new_comment.save
         format.turbo_stream {
-          if request.fullpath.include?"/reply"
+          if request.fullpath.include? "/reply"
             render turbo_stream: turbo_stream.replace("comments_#{new_comment.parent_id}",
-                                                      partial: 'shared/comment',
+                                                      partial: "shared/comment",
                                                       locals: { micropost: @micropost })
           else
             render turbo_stream: turbo_stream.prepend("microposts_#{@micropost.id}",
-                                                      partial: 'shared/comment',
+                                                      partial: "shared/comment",
                                                       locals: { micropost: new_comment })
           end
         }
@@ -24,6 +24,7 @@ class CommentsController < ApplicationController
   end
 
   private
+
   def comment_params
     params.require(:micropost).permit(:content)
   end

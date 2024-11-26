@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   # get "comment/index"
   resources :microposts do
     post "/react" => "microposts#react"
-    resources :comments, only: [:create] do
+    resources :comments, only: [ :create ] do
       post "/reply" => "comments#create"
     end
   end
@@ -16,9 +16,9 @@ Rails.application.routes.draw do
     member do
       get :following, :followers
     end
-    resources :messages, only: [:index, :destroy]
+    resources :messages, only: [ :index, :destroy ]
   end
-  resources :relationships, only: [:create, :destroy]
+  resources :relationships, only: [ :create, :destroy ]
   root "static_pages#home"
   get "static_pages/home"
   get "static_pages/help"
@@ -31,9 +31,9 @@ Rails.application.routes.draw do
   post "login" => "sessions#create"
   delete "logout" => "sessions#destroy"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  resources :account_activations, only: [:edit]
-  resources :password_resets, only: [:new, :create, :edit, :update]
-  resources :microposts, only: [:create, :destroy]
+  resources :account_activations, only: [ :edit ]
+  resources :password_resets, only: [ :new, :create, :edit, :update ]
+  resources :microposts, only: [ :create, :destroy ]
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check

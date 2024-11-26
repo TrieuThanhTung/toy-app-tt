@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe "OmniauthCallbacksControllers", type: :routing do
@@ -23,4 +22,3 @@ RSpec.describe "OmniauthCallbacksControllers", type: :routing do
     end
   end
 end
-

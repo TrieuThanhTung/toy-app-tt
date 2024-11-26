@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 require "slack-notifier"
 
 class SlackReportService
@@ -39,7 +38,7 @@ class SlackReportService
       info_section("New comments: #{new_comments}"),
       most_commented_post_info(find_most_commented_post),
       divider
-    ]
+     ]
   end
 
   private
@@ -63,10 +62,10 @@ class SlackReportService
   end
 
   def find_most_commented_post
-    sql_query = <<-SQL
-      WITH comments AS (
+    sql_query =
+      " WITH comments AS (
         SELECT m.parent_id AS parent_id, m.id AS id
-        FROM microposts AS m 
+        FROM microposts AS m
         JOIN microposts AS c ON m.id = c.parent_id
       )
       SELECT m.id, COUNT(*) as total_cmt
@@ -74,8 +73,7 @@ class SlackReportService
       LEFT JOIN comments AS c ON m.id = c.parent_id
       GROUP BY m.id
       ORDER BY total_cmt DESC
-      LIMIT 1;
-    SQL
+      LIMIT 1; "
     res = ActiveRecord::Base.connection.select_one(sql_query)
     res&.with_indifferent_access
   end

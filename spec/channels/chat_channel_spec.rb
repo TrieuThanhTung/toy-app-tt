@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe ChatChannel, type: :channel do
-  let(:user1) {create(:user)}
-  let(:user2) {create(:user)}
+  let(:user1) { create(:user) }
+  let(:user2) { create(:user) }
 
   before do
     stub_connection current_user: user1.id
@@ -14,7 +14,7 @@ RSpec.describe ChatChannel, type: :channel do
 
       expect(subscription).to be_confirmed
 
-      chat_channel = [user1.id.to_s, user2.id.to_s].sort.join("_")
+      chat_channel = [ user1.id.to_s, user2.id.to_s ].sort.join("_")
       expect(subscription).to have_stream_from("chat_channel_private_#{chat_channel}")
     end
 
@@ -22,13 +22,12 @@ RSpec.describe ChatChannel, type: :channel do
       subscribe()
       expect(subscription).to be_rejected
     end
-
   end
 
   context "when send message" do
-    let(:valid_message) {{
+    let(:valid_message) { {
       "message" => "new message"
-    }}
+    } }
 
     it "successfully" do
       subscribe(user_id: user2.id)
@@ -42,14 +41,14 @@ RSpec.describe ChatChannel, type: :channel do
   end
 
   context "when update message" do
-    let(:valid_message) {{
+    let(:valid_message) { {
       "message" => "new message"
-    }}
+    } }
 
-    let(:update_message) {{
+    let(:update_message) { {
       "id" => Message.last.id,
       "message" => "message update"
-    }}
+    } }
 
     before do
       subscribe(user_id: user2.id)
@@ -80,9 +79,9 @@ RSpec.describe ChatChannel, type: :channel do
   end
 
   context "when delete message" do
-    let(:valid_message) {{
+    let(:valid_message) { {
       "message" => "new message"
-    }}
+    } }
 
     before do
       subscribe(user_id: user2.id)
@@ -92,7 +91,7 @@ RSpec.describe ChatChannel, type: :channel do
     it "successfully" do
       expect {
         perform :delete, {
-          "id" => Message.last.id,
+          "id" => Message.last.id
         }
       }.to change(Message, :count).by(-1)
 
