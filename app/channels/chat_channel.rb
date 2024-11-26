@@ -2,8 +2,9 @@ class ChatChannel < ApplicationCable::Channel
   include MessagesHelper
 
   def subscribed
-    reject if params[:user_id].blank?
-    stream_from channel_name(private_channel(current_user, params[:user_id]))
+    user_id = params[:user_id]
+    reject if user_id.blank?
+    stream_from channel_name(private_channel(current_user, user_id))
   end
 
   def unsubscribed
@@ -11,9 +12,10 @@ class ChatChannel < ApplicationCable::Channel
   end
 
   def create(data)
-    channel_name = private_channel(current_user, params[:user_id])
+    user_id = params[:user_id]
+    channel_name = private_channel(current_user, user_id)
     room = Room.find_or_create_by(title: channel_name) do |room|
-      create_private_room(channel_name, current_user, params[:user_id])
+      create_private_room(channel_name, current_user, user_id)
     end
     ActiveRecord::Base.transaction do
       @message = Message.create!(sender_id: current_user, room_id: room.id, message_type: :text, content: data["message"])
@@ -26,8 +28,8 @@ class ChatChannel < ApplicationCable::Channel
         data: @message
       }
       broadcast_message(channel_name, "create", message)
-    rescue ActiveRecord::RecordInvalid => e
-      broadcast_error_message(channel_name, e.message)
+    rescue ActiveRecord::RecordInvalid => exception
+      broadcast_error_message(channel_name, exception.message)
     end
   end
 
@@ -57,14 +59,5 @@ class ChatChannel < ApplicationCable::Channel
 
   def set_message(data)
     Message.find_by(id: data["id"])
-  end
-
-  def render_to_string_message(partial, data)
-    ApplicationController.renderer.render(
-      partial: partial,
-      locals: data,
-      layout: false,
-      formats: [ :html ]
-    )
   end
 end

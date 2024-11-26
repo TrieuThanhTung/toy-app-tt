@@ -35,4 +35,13 @@ module MessagesHelper
   def authorized_to_action?(message, current_user_id)
     message.present? && current_user_id == message.sender_id
   end
+
+  def render_to_string_message(partial, data)
+    ApplicationController.renderer.render(
+      partial: partial,
+      locals: data,
+      layout: false,
+      formats: [ :html ]
+    )
+  end
 end
