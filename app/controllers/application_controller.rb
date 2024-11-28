@@ -17,10 +17,10 @@ class ApplicationController < ActionController::Base
   def set_sentry_context
     begin
       yield
-    rescue StandardError => e
-      sentry = Sentry.capture_exception(e)
-      SentryService.new(sentry.event_id, e).report
-      raise e
+    rescue StandardError => error
+      sentry = Sentry.capture_exception(error)
+      SentryService.new(sentry.event_id, error).report
+      raise error
     end
   end
 end
