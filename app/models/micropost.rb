@@ -1,3 +1,4 @@
+# Micropost model
 class Micropost < ApplicationRecord
   belongs_to :user
   belongs_to :parent, class_name: "Micropost", optional: true

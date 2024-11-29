@@ -1,3 +1,4 @@
+# Room model
 class Room < ApplicationRecord
   has_many :participants, dependent: :destroy
 

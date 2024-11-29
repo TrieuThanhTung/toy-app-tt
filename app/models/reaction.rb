@@ -1,3 +1,4 @@
+# React model
 class Reaction < ApplicationRecord
   belongs_to :user
   belongs_to :micropost
