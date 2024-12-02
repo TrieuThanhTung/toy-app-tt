@@ -6,8 +6,8 @@ module MessagesHelper
       Participant.create!(user_id: sender_id, room_id: room.id)
       Participant.create!(user_id: recipient_id, room_id: room.id)
       room
-    rescue ActiveRecord::RecordInvalid => e
-      broadcast_error_message(channel_name, e.message)
+    rescue ActiveRecord::RecordInvalid => error
+      broadcast_error_message(channel_name, error.message)
     end
   end
 
