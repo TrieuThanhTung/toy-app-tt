@@ -1,0 +1,19 @@
+:pidfile: tmp/pids/sidekiq.pid
+:logfile: log/sidekiq.log
+development:
+  :concurrency: 5
+
+production:
+  :concurrency: 5
+
+:max_retries: 0
+
+:queues:
+  - default
+  - critical
+
+:scheduler:
+  :schedule:
+    SendDailyReport8am:
+      cron: "0 8 * * *"
+      class: "SendDailyReportToSlackJob"

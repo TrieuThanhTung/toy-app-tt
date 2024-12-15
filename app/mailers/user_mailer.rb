@@ -4,11 +4,11 @@ class UserMailer < ApplicationMailer
   #
   #   en.user_mailer.account_activation.subject
   #
-  def account_activation(user)
+  def account_activation(user = nil)
     @greeting = "Hi"
     @user = user
 
-    mail to: "tung.ttrieu@gmail.com", subject: "Account activation"
+    mail to: "tung.ttrieu@gmail.com", subject: "Account activation #{@user&.name}"
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml

@@ -1,7 +1,8 @@
 
 class StaticPagesController < ApplicationController
   def test
-    UserMailer.account_activation(current_user).deliver
+    send_mail_job = SendMailJob.perform_later current_user
+    # UserMailer.account_activation(current_user).deliver_now
     render json: {"test": "Hello World!" }
   end
   def home
