@@ -16,7 +16,13 @@
       <%= micropost.content %>
     </p>
     <div >
-      <%= image_tag micropost.image if micropost.image.attached? %>
+      <%= image_tag micropost.image class: "image-micropost" if micropost.image.attached? %>
+      <%= link_to micropost.file.filename, micropost.file, disposition: 'preview' if micropost.file.attached?%>
+    </div>
+    <div>
+      <% micropost.images.each do |image| %>
+        <%= image_tag(image, class: "image-micropost" )%>
+      <% end %>
     </div>
     <p align="right" class="timestamp">
       Posted <%= time_ago_in_words(micropost.created_at) %> ago.

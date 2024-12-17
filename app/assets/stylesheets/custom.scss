@@ -348,6 +348,15 @@ span.image {
   color: white;
 }
 
+
+#message-image-input {
+  width: 200px;
+}
+
+.preview-image-input {
+  max-width: 200px;
+}
+
 // comment form
 #comment-form {
   margin-top: 60px;
@@ -812,3 +821,9 @@ span.image {
 .icon-close:hover {
   cursor: pointer;
 }
+
+.image-micropost {
+  max-width: 200px;
+}
+
+

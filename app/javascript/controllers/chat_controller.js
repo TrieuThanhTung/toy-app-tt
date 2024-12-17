@@ -7,6 +7,7 @@ export default class extends Controller {
 
     connect() {
         this.sub = this.createActionCableChannel();
+        $(document).ready(this.verifyImageInput())
     }
 
     checkMessages() {
@@ -83,11 +84,32 @@ export default class extends Controller {
         );
     }
 
-    sendMessage(event) {
+    async sendMessage(event) {
         event.preventDefault()
         const content = this.textinputTarget.value
-        this.sub.perform("create", {message: content})
+        const image = $("#message-image-input")
+        const arrayUrl = document.URL.split('/').at(-2)
+        if(image[0].files[0] !== undefined) {
+            const file = image[0].files[0]
+            const formData = new FormData()
+            formData.append("content", "send image")
+            formData.append("image", file)
+            const response = await fetch(document.URL, {
+                method: "POST",
+                headers: {
+                    'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
+                    "Content-Type": "multipart/form-data"
+                },
+                body: formData
+            });
+            console.log(arrayUrl, response)
+        } else {
+            console.log("sent text")
+            this.sub.perform("create", {message: content})
+        }
         this.textinputTarget.value = '';
+        image.val("")
+        $("#preview-image-input").addClass("hidden");
     }
 
     updateMessage(event){
@@ -117,6 +139,19 @@ export default class extends Controller {
         const messageId = event.target.getAttribute("data-message-id");
         const overlay = this.overlayTarget
         overlay.style.display = 'none'
+    }
+
+    verifyImageInput() {
+        $("#message-image-input").bind("change", function () {
+            const size_in_megabytes = this.files[0].size / 1024;
+            console.log(this.files[0])
+            const url = URL.createObjectURL(this.files[0])
+            if (size_in_megabytes > 200) {
+                alert("Maximum file size is 200 KB. Please choose a smaller file.");
+                $("#message-image-input").val("");
+            }
+            $("#preview-image-input").removeClass("hidden").attr("src",url);
+        })
     }
 
 }

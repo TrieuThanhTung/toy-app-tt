@@ -1,4 +1,13 @@
+require "sidekiq/web"
+
 Rails.application.routes.draw do
+  scope :monitoring do
+    Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+      username == 'admin' && password == 'password'
+    end
+    mount Sidekiq::Web, at: "/sidekiq"
+  end
+
   devise_for :users, controllers: {
     omniauth_callbacks: "users/omniauth_callbacks"
   }
@@ -16,7 +25,7 @@ Rails.application.routes.draw do
     member do
       get :following, :followers
     end
-    resources :messages, only: [ :index, :destroy ]
+    resources :messages, only: [ :index, :create, :destroy ]
   end
   resources :relationships, only: [ :create, :destroy ]
   root "static_pages#home"

@@ -4,4 +4,5 @@ import "controllers"
 import "channels"
 import "jquery"
 import "jquery_ujs"
+import "./layouts/header.js"
 

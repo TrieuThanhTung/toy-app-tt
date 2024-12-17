@@ -1,9 +1,15 @@
 <li id="micropost-<%= micropost.id %>">
   <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
   <span class="micropost-content">
-    <% if current_user?(micropost.user) %>
-      <%= link_to "delete", micropost, data: {turbo_method: :delete,  turbo_confirm: "You sure?" } %>
-    <% end %>
+    <div >
+      <%= link_to micropost.file.filename, micropost.file, disposition: 'preview' if micropost.file.attached?%>
+    </div>
+    <div>
+      <% micropost.images.each_with_index do |image, index| %>
+        <%= image_tag(image, class: "image-micropost" )%>
+        <%= link_to "Download #{index + 1}", image, download: 'statements.json' if image.present?%>
+      <% end %>
+    </div>
   </span>
   <p class="content micropost-content">
     <%= micropost.content %>
@@ -18,4 +24,3 @@
     Posted <%= time_ago_in_words(micropost.created_at) %> ago.
   </span>
 </li>
-

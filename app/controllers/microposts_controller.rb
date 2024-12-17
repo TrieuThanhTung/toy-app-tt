@@ -27,6 +27,7 @@ class MicropostsController < ApplicationController
   def create
     @micropost = current_user.microposts.build(micropost_params)
     @micropost.image.attach(params[:micropost][:image])
+    @micropost.images.attach(params[:micropost][:images])
     respond_to do |format|
       if @micropost.save
         flash[:success] = "Micropost created!"
@@ -100,7 +101,7 @@ class MicropostsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def micropost_params
-    params.require(:micropost).permit(:title, :content, :image)
+    params.require(:micropost).permit(:title, :content, :images, :file)
   end
 
   def correct_user

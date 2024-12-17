@@ -18,7 +18,8 @@ class ChatChannel < ApplicationCable::Channel
       create_private_room(channel_name, current_user, user_id)
     end
     ActiveRecord::Base.transaction do
-      @message = Message.create!(sender_id: current_user, room_id: room.id, message_type: :text, content: data["message"])
+      @message = Message.new(sender_id: current_user, room_id: room.id, message_type: :text, content: data["message"])
+      @message.save!
       sender_message = render_to_string_message("messages/sender_message",
                                                 { message: @message, recipient_id: params["user_id"] })
       recipient_message = render_to_string_message("messages/recipient_message", { message: @message })

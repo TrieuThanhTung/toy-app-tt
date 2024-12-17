@@ -16,6 +16,16 @@ class MessagesController < ApplicationController
                              room_id: @room.id,
                              message_type: :text,
                              content: params[:content])
+      message.image.attach(params[:image])
+      message.save!
+      sender_message = render_to_string_message("messages/sender_message",
+                                                { message: message, recipient_id: params["user_id"] })
+      recipient_message = render_to_string_message("messages/recipient_message", { message: message })
+      message = {
+        sender_message: sender_message,
+        recipient_message: recipient_message,
+        data: @message
+      }
       broadcast_message(@channel_name, "create", message)
     rescue ActiveRecord::RecordInvalid => exception
       broadcast_error_message(@channel_name, exception.message)
