@@ -1,0 +1,5 @@
+:schedule:
+  SendDailyReport8am:
+    cron: "* 8 * * *"
+#    cron: "*/1 * * * *"
+    class: "SendDailyReportToSlackJob"

@@ -11,9 +11,3 @@ production:
 :queues:
   - default
   - critical
-
-:scheduler:
-  :schedule:
-    SendDailyReport8am:
-      cron: "0 8 * * *"
-      class: "SendDailyReportToSlackJob"
