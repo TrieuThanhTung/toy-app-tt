@@ -54,7 +54,7 @@ gem "sentry-rails"
 gem "devise"
 gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
-gem "omniauth-github", "~> 1.1", ">= 1.1.2"
+gem "omniauth-github", "~> 2.0"
 gem "omniauth-facebook"
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
